@@ -19,6 +19,14 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
+
+//    public function getRandomAnimals(): ?Animal {
+//        return $this->createQueryBuilder('a')
+//            ->setMaxResults(5)
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
     // /**
     //  * @return Animal[] Returns an array of Animal objects
     //  */
