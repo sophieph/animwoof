@@ -1,5 +1,6 @@
 # animwoof
 
 ## Required
-
-PHP > 7.4
+| Version     | Supported          |
+| ----------- | ------------------ |
+| PHP 7.4.x   | :white_check_mark: |
