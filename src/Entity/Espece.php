@@ -6,9 +6,11 @@ use App\Repository\EspeceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=EspeceRepository::class)
+ * @UniqueEntity("nom")
  */
 class Espece
 {
@@ -29,8 +31,18 @@ class Espece
      */
     private $animals;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $createdAt;
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->animals = new ArrayCollection();
     }
 
@@ -77,6 +89,18 @@ class Espece
                 $animal->setEspece(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

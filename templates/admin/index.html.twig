@@ -1,15 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout.html.twig' %}
 
 {% block title %}Back-office{% endblock %}
 
 {% block body %}
 
-    <h1>Back-office</h1>
 
-    <ul>
-        <li><a href="{{ path('admin_animals') }}">Animaux</a></li>
-        <li><a href="{{ path('admin_shop') }}">Boutique</a></li>
-        <li><a href="{{ path('admin_donation') }}">Donation</a></li>
-        <li><a href="{{ path('admin_blog') }}">Blog</a></li>
-    </ul>
 {% endblock %}

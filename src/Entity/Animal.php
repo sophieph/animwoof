@@ -63,6 +63,16 @@ class Animal
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $createdAt;
+
+    public function __construct() {
+        $this->createdAt = new \DateTime();
+        $this->isAdopted = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -172,6 +182,18 @@ class Animal
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

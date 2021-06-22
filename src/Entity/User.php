@@ -48,8 +48,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $pseudo;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $createdAt;
+
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->roles = array('ROLE_ADMIN');
 
     }
@@ -155,5 +161,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPseudo()
     {
         return $this->pseudo;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }
