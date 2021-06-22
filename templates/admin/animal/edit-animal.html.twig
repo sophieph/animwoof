@@ -3,7 +3,10 @@
 {% block title %}Back-office : {{ animal.nom }}{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
+
+    <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" style="width:100px" alt="{{ animal.race }}"/>
+
+    {{ form_start(form) }}
 
     {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
     {{ form_end(form) }}

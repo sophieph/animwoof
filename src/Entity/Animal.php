@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AnimalRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Animal
 {
@@ -68,10 +69,16 @@ class Animal
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
     public function __construct() {
         $this->createdAt = new \DateTime();
         $this->isAdopted = false;
     }
+    
 
     public function getId(): ?int
     {
@@ -196,5 +203,26 @@ class Animal
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function deletePhoto(){
+        if(file_exists(__DIR__.'/../../public/uploads/'.$this->photo)){
+            unlink(__DIR__.'/../../public/uploads/'.$this->photo);
+        }
     }
 }
