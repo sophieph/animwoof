@@ -20,8 +20,8 @@
                     <li><a href="{{ path('homepage') }}">Accueil</a></li>
                     <li><a href="#">Adoption</a></li>
                     <li><a href="#">Boutique</a></li>
-                    <li><a href="#">Donation</a></li>
                     <li><a href="#">Blog</a></li>
+                    <li><a href="{{ path('don') }}">Faire un don</a></li>
                     {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_dashboard') }}">Back-office</a></li>{% endif %}
                 </ul>
             </nav>
