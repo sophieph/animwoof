@@ -19,7 +19,6 @@ class ReservationType extends AbstractType
             ->add('prenom')
             ->add('zipcode')
             ->add('phoneNumber')
-            ->add('email')
             ->add('Reserver', SubmitType::class, [
             ])
         ;

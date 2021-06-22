@@ -57,15 +57,20 @@ class AdoptionController extends AbstractController
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
+        $user = $this->getUser();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setAnimal($animal);
-            $animal->setIsAdopted(true);
-            $animal->setDateAdoption(new \DateTime());
-            $animal->setReservation($reservation);
-//            dd($animal);
-            $em->persist($reservation);
-            $em->persist($animal);
-            $em->flush();
+            if ($user) {
+                $reservation->setAnimal($animal);
+                $reservation->setUser($user);
+                $reservation->setEmail($user->getEmail());
+                $animal->setIsAdopted(true);
+                $animal->setDateAdoption(new \DateTime());
+                $animal->setReservation($reservation);
+                $em->persist($reservation);
+                $em->persist($animal);
+                $em->flush();
+            }
 
             $this->addFlash('success', 'Génial ! On se retrouve très prochainement avec votre futur membre de la famille ! ');
 

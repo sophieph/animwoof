@@ -22,9 +22,13 @@
 
         <p>Vous souhaitez l'adopter ?</p>
 
-        {{ form_start(form) }}
+        {% if app.user %}
+            {{ form_start(form) }}
 
-        {{ form_end(form) }}
+            {{ form_end(form) }}
+        {% else %}
+            <a href="{{ path('login') }}">Connectez-vous pour adopter ! </a>
+        {% endif %}
     {% endif %}
 
 

@@ -53,6 +53,11 @@ class Reservation
      */
     private $email;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     */
+    private $user;
+
     public function __construct() {
         $this->adoptedAt = new \DateTime();
     }
@@ -142,6 +147,18 @@ class Reservation
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
