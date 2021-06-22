@@ -3,11 +3,11 @@
 {% block title %}Adoptez un animal ! {% endblock %}
 
 {% block body %}
-
+<div class="container">
     <h1>Anim Family </h1>
     <div class="row">
     {% for animal in animals %}
-        <div class="col-xs-4">
+        <div class="col-sm-3">
             <div class="card" style="width: 18rem;opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
                 <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" class="card-img-top"  alt="{{ animal.race }}"/>
                 <div class="card-body">
@@ -36,8 +36,9 @@
 
 
     <h1>Les derniers animaux adoptés</h1>
+    <div class="row">
     {% for animal in animalAdopted %}
-        <div class="col-xs-4">
+        <div class="col-sm-3">
             <div class="card" style="width: 18rem;opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
                 <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" class="card-img-top"  alt="{{ animal.race }}"/>
                 <div class="card-body">
@@ -57,5 +58,6 @@
             </div>
         </div>
     {% endfor %}
-
+    </div>
+</div>
 {% endblock %}
