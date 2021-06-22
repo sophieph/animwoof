@@ -23,4 +23,36 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    /**
+     * @Route("/animaux", name="admin_animals")
+     */
+    public function animals()
+    {
+        return $this->render('admin/animals.html.twig');
+    }
+
+    /**
+     * @Route("/boutique", name="admin_shop")
+     */
+    public function shop()
+    {
+        return $this->render('admin/shop.html.twig');
+    }
+
+    /**
+     * @Route("/dons", name="admin_donation")
+     */
+    public function donation()
+    {
+        return $this->render('admin/donation.html.twig');
+    }
+
+    /**
+     * @Route("/blog", name="admin_animals")
+     */
+    public function blog()
+    {
+        return $this->render('admin/blog.html.twig');
+    }
 }
