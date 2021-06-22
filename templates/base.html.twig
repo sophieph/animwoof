@@ -22,6 +22,7 @@
                     <li><a href="#">Boutique</a></li>
                     <li><a href="#">Donation</a></li>
                     <li><a href="#">Blog</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_dashboard') }}">Back-office</a></li>{% endif %}
                 </ul>
             </nav>
             {% if app.user %}
