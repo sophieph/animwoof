@@ -6,6 +6,7 @@ use App\Entity\Animal;
 use App\Entity\Espece;
 use App\Form\Admin\AddAnimalType;
 use App\Form\Admin\AddEspeceType;
+use App\Services\Admin\AnimalService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,7 @@ class AdminAnimalController extends AbstractController
     /**
      * @Route("/", name="admin_animals")
      */
-    public function animals(Request $request, PaginatorInterface $paginator): Response
+    public function animals(Request $request, PaginatorInterface $paginator, AnimalService $animalService): Response
     {
         $animals = $this->getDoctrine()->getRepository(Animal::class)->findAll();
         $animalsAdoptedReq = $this->getDoctrine()->getRepository(Animal::class)->findBy(['isAdopted' => true]);
@@ -79,6 +80,11 @@ class AdminAnimalController extends AbstractController
         $formAnimal->handleRequest($request);
 
         if ($formAnimal->isSubmitted() && $formAnimal->isValid()){
+            $img = $formAnimal->get('photo')->getData();
+            if ($img) {
+                $file = $animalService->upload($img);
+                $animal->setPhoto($file);
+            }
             try {
                 $em->persist($animal);
                 $em->flush();
@@ -106,7 +112,7 @@ class AdminAnimalController extends AbstractController
      * @param Animal $animal
      * @return RedirectResponse|Response
      */
-    public function editAnimal(Request $request, Animal $animal)
+    public function editAnimal(Request $request, Animal $animal, AnimalService $animalService)
     {
         if ($animal == null) {
             $this->addFlash('danger', 'Animal introuvable');
@@ -118,7 +124,17 @@ class AdminAnimalController extends AbstractController
         $form = $this->createForm(AddAnimalType::class, $animal);
         $form->handleRequest($request);
 
+        $photo = $animal->getPhoto();
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $img = $form->get('photo')->getData();
+            if ($img != null) {
+                unlink($this->getParameter('animal_images_directory') . $photo);
+                $file = $animalService->upload($img);
+                $animal->setPhoto($file);
+            }
+
+
             $em->persist($animal);
             $em->flush();
 

@@ -19,7 +19,22 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
+    public function findLastAdopted()
+    {
+        $now = new \DateTime('now');
+        $lastMonth = new \Datetime('last day of last month');
 
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.isAdopted =  :adopted')
+            ->andWhere('a.dateAdoption <= :now')
+            ->andWhere('a.dateAdoption >= :month')
+            ->setParameter('adopted', true)
+            ->setParameter('now', $now)
+            ->setParameter('month', $lastMonth)
+            ->getQuery()
+            ->execute()
+            ;
+    }
 //    public function getRandomAnimals(): ?Animal {
 //        return $this->createQueryBuilder('a')
 //            ->setMaxResults(5)

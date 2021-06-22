@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AnimalRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Animal
 {
@@ -68,10 +69,21 @@ class Animal
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="animal", cascade={"persist", "remove"})
+     */
+    private $reservation;
+
     public function __construct() {
         $this->createdAt = new \DateTime();
         $this->isAdopted = false;
     }
+    
 
     public function getId(): ?int
     {
@@ -194,6 +206,44 @@ class Animal
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function deletePhoto(){
+        if(file_exists(__DIR__.'/../../public/uploads/'.$this->photo)){
+            unlink(__DIR__.'/../../public/uploads/'.$this->photo);
+        }
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getAnimal() !== $this) {
+            $reservation->setAnimal($this);
+        }
+
+        $this->reservation = $reservation;
 
         return $this;
     }

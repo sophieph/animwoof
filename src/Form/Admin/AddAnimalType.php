@@ -4,9 +4,11 @@ namespace App\Form\Admin;
 
 use App\Entity\Animal;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class AddAnimalType extends AbstractType
 {
@@ -20,6 +22,22 @@ class AddAnimalType extends AbstractType
             ->add('dateDeNaissance')
             ->add('description')
             ->add('espece')
+            ->add('photo', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1000M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid Image document',
+                    ])
+                ],
+            ])
             ->add('ajouter', SubmitType::class, [
             ])
         ;
