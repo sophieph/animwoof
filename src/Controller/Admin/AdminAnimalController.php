@@ -8,28 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin")
- * Class AdminController
+ * @Route("/admin/animaux")
+ * Class AdminAnimalController
  * @package App\Controller\Admin
  * @IsGranted("ROLE_ADMIN")
  */
-class AdminController extends AbstractController
+class AdminAnimalController extends AbstractController
 {
+
     /**
-     * @Route("/", name="admin_dashboard")
-     * @return Response
+     * @Route("/", name="admin_animals")
      */
-    public function index(): Response
+    public function animals()
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        return $this->render('admin/animal/animals.html.twig');
     }
-
-
-
-
-
-
-
 }
