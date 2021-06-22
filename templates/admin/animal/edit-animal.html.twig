@@ -3,7 +3,13 @@
 {% block title %}Back-office : {{ animal.nom }}{% endblock %}
 
 {% block body %}
-
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" style="width:100px" alt="{{ animal.race }}"/>
 
     {{ form_start(form) }}

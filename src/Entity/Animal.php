@@ -74,6 +74,11 @@ class Animal
      */
     private $photo;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Reservation::class, mappedBy="animal", cascade={"persist", "remove"})
+     */
+    private $reservation;
+
     public function __construct() {
         $this->createdAt = new \DateTime();
         $this->isAdopted = false;
@@ -224,5 +229,22 @@ class Animal
         if(file_exists(__DIR__.'/../../public/uploads/'.$this->photo)){
             unlink(__DIR__.'/../../public/uploads/'.$this->photo);
         }
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(Reservation $reservation): self
+    {
+        // set the owning side of the relation if necessary
+        if ($reservation->getAnimal() !== $this) {
+            $reservation->setAnimal($this);
+        }
+
+        $this->reservation = $reservation;
+
+        return $this;
     }
 }
