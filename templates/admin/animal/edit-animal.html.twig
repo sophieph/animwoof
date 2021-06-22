@@ -1,0 +1,10 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Back-office : {{ animal.nom }}{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+
+    {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
+    {{ form_end(form) }}
+{% endblock %}
