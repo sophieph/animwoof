@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,9 +56,15 @@ class Products
      */
     private $categorie;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Panier::class, mappedBy="produits")
+     */
+    private $paniers;
+
     public function __construct()
     {
         $this->created_at = new \DateTime('now');
+        $this->paniers = new ArrayCollection();
     }
 
 
@@ -156,5 +164,32 @@ class Products
         if(file_exists(__DIR__.'/../../public/uploads/products/'.$this->image)){
             unlink(__DIR__.'/../../public/uploads/products/'.$this->image);
         }
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            $panier->removeProduit($this);
+        }
+
+        return $this;
     }
 }

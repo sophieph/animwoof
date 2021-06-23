@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{produit.name}} {% endblock %}
+
+{% block body %}
+
+<img src="{{ asset('uploads/images/products/' ~ produit.image)}}" style="width:200px" alt="{{ produit.name }}"/>
+<ul>
+    <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
+    <li><b>Prix : </b> {{ produit.price }} &euro;</li>
+    <li><b>Description : </b> {{ produit.description }}</li>
+</ul>
+    <button><a href="{{ path('panier_add', {'id' : produit.id }) }}" class="">Ajouter au panier</a></button>
+
+
+{% endblock %}
