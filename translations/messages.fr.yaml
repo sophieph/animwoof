@@ -1,4 +1,5 @@
 Nom: Nom
+Name : Nom
 Race : Race
 Age : Age
 Poids : Poids
@@ -12,3 +13,6 @@ Modifier : modifier
 Pseudo: Pseudo
 Mot de passe : Mot de passe
 Confirmation de mot de passe: Confirmation de mot de passe
+Price : Prix
+Quantity : Quantité
+Categrie : Catégorie

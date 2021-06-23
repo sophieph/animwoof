@@ -1,4 +1,5 @@
 Nom: Name
+Name : Nom
 Race : Race
 Age : Years
 Poids : Weight
@@ -13,3 +14,6 @@ Pseudo : Username
 Email : Email
 Mot de passe : Password
 Confirmation de mot de passe : Password confirmation
+Price : Price
+Quantity : Quantity
+Categorie : Category
