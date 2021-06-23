@@ -4,6 +4,14 @@
 
 {% block body %}
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
 <img src="{{ asset('uploads/images/products/' ~ produit.image)}}" style="width:200px" alt="{{ produit.name }}"/>
 <ul>
     <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>

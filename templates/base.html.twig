@@ -44,6 +44,18 @@
                     <a href="{{ path('signup') }}">Sign up</a>
                 {% endif %}
             </header>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="nav-admin">
+                <h1>Back-office</h1>
+
+                <ul>
+                    <li><a href="{{ path('admin_animals') }}">Animaux</a></li>
+                    <li><a href="{{ path('admin_shop') }}">Boutique</a></li>
+                    <li><a href="{{ path('admin_donation') }}">Donation</a></li>
+                    <li><a href="{{ path('admin_blog') }}">Blog</a></li>
+                </ul>
+            </div>
+            {% endif %}
 
             <div class="content">
                 {% block body %}{% endblock %}

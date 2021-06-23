@@ -4,6 +4,13 @@
 {% block body %}
     <div class="container">
         <h1>Boutique</h1>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="row">
             {% for produit in produits %}
                 <div class="col-sm-3">

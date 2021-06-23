@@ -4,7 +4,13 @@
 
 {% block body %}
     <h1>Panier</h1>
-
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     {% if items|length > 0 %}
 
         <table>
