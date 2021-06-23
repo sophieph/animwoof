@@ -37,11 +37,20 @@
                 </nav>
                 {% if app.user %}
                     <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('logout') }}">Logout</a>
+                        <ul>
+                            <li>Hello you - <a href="{{ path('logout') }}">Se déconnecter</a></li>
+                        </ul>
                     </div>
                 {% else %}
-                    <a href="{{ path('login') }}">Log in</a>
-                    <a href="{{ path('signup') }}">Sign up</a>
+                    <ul>
+                        <li>
+                            <a href="{{ path('login') }}">Log in</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('signup') }}">Sign up</a>
+                        </li>
+                    </ul>
+
                 {% endif %}
             </header>
             {% if is_granted('ROLE_ADMIN') %}

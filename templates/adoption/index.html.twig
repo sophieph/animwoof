@@ -16,7 +16,7 @@
                     <ul>
                         <li><b>Espèce :</b> {{ animal.espece.nom }}</li>
                         <li><b>Race : </b> {{ animal.race }}</li>
-                        <li><b>Age : </b> {{ animal.age }}</li>
+                        <li><b>Age : </b> {{ animal.age }} ans</li>
                         <li>{% if animal.isAdopted %} Il a trouvé une famille ! - Adopté le  {{ animal.dateAdoption|date('d/m/Y') }}
                             {% else %} Il n'a pas encore de maître
                             {% endif %}</li>
