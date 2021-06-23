@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% if animal.isAdopted %} {{ animal.espece.nom }} - {{animal.nom}} {% else %} Adoptez {{ animal.nom }}{% endif %}{% endblock %}
+
+{% block body %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" style="width:200px" alt="{{ animal.race }}"/>
+    <ul>
+        <li><b>Espèce :</b> {{ animal.espece.nom }}</li>
+        <li><b>Race : </b> {{ animal.race }}</li>
+        <li><b>Age : </b> {{ animal.age }} ans</li>
+    </ul>
+
+    {% if animal.isAdopted %} <p>Ce petit bout de chou a enfin trouvé maître à son pied ! </p> {% else %}
+
+        <p>Vous souhaitez l'adopter ?</p>
+
+        {% if app.user %}
+            {{ form_start(form) }}
+
+            {{ form_end(form) }}
+        {% else %}
+            <a href="{{ path('login') }}">Connectez-vous pour adopter ! </a>
+        {% endif %}
+    {% endif %}
+
+
+{% endblock %}

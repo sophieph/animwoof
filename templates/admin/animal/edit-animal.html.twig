@@ -3,7 +3,33 @@
 {% block title %}Back-office : {{ animal.nom }}{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" style="width:100px" alt="{{ animal.race }}"/>
+    <ul>
+        <li><b>Nom :</b> {{ animal.nom }}</li>
+        <li><b>Espece :</b> {{ animal.espece.nom }}</li>
+        <li><b>Race : </b>{{ animal.race }}</li>
+        <li><b>Age :</b> {{ animal.age }} ans</li>
+        <li><b>Poids :</b> {{ animal.poids }} kg</li>
+        <li><b>Née le</b> {{ animal.dateDeNaissance|date('d/m/Y') }}</li>
+        <li><b>Description : </b>{{ animal.description }}</li>
+        {% if animal.isAdopted %}
+        <li>
+            <ul>
+                <li>Adopté le {{ animal.dateAdoption|date('d/m/Y') }}</li>
+                <li>Par {{ animal.reservation.user.pseudo }}</li>
+            </ul>
+        </li>
+        {% endif %}
+    </ul>
+
+    {{ form_start(form) }}
 
     {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
     {{ form_end(form) }}
