@@ -46,11 +46,10 @@ class SecurityController extends AbstractController
      * @Route("/signup", name="signup")
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @param UserPasswordHasherInterface $passwordEncoder
-     * @param LoginFormAuthenticator $authenticator
+     * @param UserPasswordHasherInterface $passwordHasher
      * @return RedirectResponse|Response
      */
-    public function signup(Request $request,EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, LoginFormAuthenticator $authenticator)
+    public function signup(Request $request,EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
         $form = $this->createForm(SignUpType::class, $user);
@@ -63,12 +62,11 @@ class SecurityController extends AbstractController
                     'verify_email_error',
                     'L\'email existe déjà.'
                 );
-                return $this->redirectToRoute('signupß');
+                return $this->redirectToRoute('signup');
             }
 
-            // encode the plain password
             $user->setPassword(
-                $passwordEncoder->encodePassword(
+                $passwordHasher->hashPassword(
                     $user,
                     $form->get('password')->getData()
                 )
