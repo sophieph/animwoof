@@ -1,29 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DonController!{% endblock %}
+{% block title %}Faites un don ! | Animwoof{% endblock %}
 
 {% block body %}
+    <div class="card bg-dark text-center text-uppercase rounded-0 text-white my-3">
+        <h1>Faire une don</h1>
+    </div>
 
-    <div>
-        <dvi>Total des dons</dvi>
+    <div class="row text-center my-3">
+        <div class="col ">
+            <div class="card rounded-0 h-100 p-5">
+                Total des dons
+            </div>
+        </div>
+
         {% if app.user %}
-            <dvi>Somme totale des dons</dvi>
+            <div class="col">
+                <div class="card rounded-0 h-100 p-5">Somme Total des dons</div>
+            </div>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
-            <dvi>Liens vers lists des dons</dvi>
+            <div class="col">
+                <div class="card rounded-0 h-100 p-5">
+                    <div class="col"><a href="{{ path('admin_donation') }}">Tous les dons</a></div>
+                </div>
+            </div>
         {% endif %}
     </div>
 
-    <h1>Faites un don</h1>
 
-    {% if app.user %}
-        <h3>Formualaire</h3>
-        {# form de don #}
+
+    {% if not app.user %}
+        <div class="card border-0 my-3 text-center p-5">
+            <h3><a href="{{ path('login') }}">Connectez-vous</a> ou <a href="{{ path('signup') }}">inscrivez vous</a> pour faire un don</h3>
+        </div>
+
     {% else %}
-        <h3>Connectez vous ou inscrivez vous pour faire un don</h3>
-        <a href="{{ path('login') }}">Log in</a>
-        <a href="{{ path('signup') }}">Sign up</a>
+        <div class="row">
+            <div class="col">
+                <div class="card rounded-0">
+                    <div class="card-header text-center">
+                        <h2 class="card-title">Liste de tous vos dons</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center border py-2">
+                            <div class="col p-0 m-0"><h6 class="p-0 m-0">{{ userDons.listTotal }}</h6></div>
+                            <div class="col p-0 m-0"><h6 class="p-0 m-0">|</h6></div>
+                            <div class="col p-0 m-0"><h6 class="p-0 m-0">{{ userDons.listSum | number_format(2, ',') }} €</h6></div>
+                        </div>
+
+                        list de tous vos dons
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card rounded-0">
+                    <div class="card-header text-center">
+                        <h2 class="card-title">Faites un don</h2>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(donnateForm) }}
+                        {{ form_end(donnateForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
-    {{ lastDon.user.pseudo }}
 
 {% endblock %}

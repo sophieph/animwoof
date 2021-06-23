@@ -1,0 +1,17 @@
+<div class="card border-0 mx-auto">
+    <div class="card-header">
+        <h1 class="card-title">Don #{{ don.id }}</h1>
+    </div>
+    <div class="card-body h2 my-3 px-5">
+
+        <div class="h4"><i>Date de Transaction</i>  : <b>{{ don.dateTransaction | date('d m y') }}</b></div>
+        <hr>
+        <div class="h4"><i>Montant</i> : <b>{{ don.montant | number_format(2, ',')}} €</b></div>
+        <hr>
+        <div class="h4"><i>Message</i>:</div>
+        <div class="h4 card rounded-0 py-3 px-2 text-center"><b><em>« {{ don.message }} »</em></b></div>
+        <hr>
+        <p class="h4"><i>Donnateur</i> : <b>{% if(don.isAnonymous) %} Anonyme {% else %} {{ don.user.pseudo }} {% endif %}</b></p>
+    </div>
+</div>
+

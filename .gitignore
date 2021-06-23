@@ -30,3 +30,4 @@ yarn-error.log
 /.idea/
 /migrations/Version20210622164446.php
 /migrations/Version20210622171255.php
+/migrations/Version20210621151229.php

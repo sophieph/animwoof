@@ -42,6 +42,22 @@
           ->getResult();
     }
     
+    public function fecthUserDonList(int $idUser): \stdClass
+    {
+      $userDons = new \stdClass();
+      $userDons->list = $this->createQueryBuilder('d')
+          ->orderBy('d.date_transaction', 'DESC')
+          ->where('d.user = :idUser')
+          ->setParameter('idUser', $idUser)
+          ->getQuery()
+          ->getResult();
+      $userDons->listTotal = count($userDons->list);
+      $userDons->listSum = array_sum(array_map(function ($don) {
+        return $don->getMontant();
+      }, $userDons->list));
+      return $userDons;
+    }
+    
     
     
     // /**
