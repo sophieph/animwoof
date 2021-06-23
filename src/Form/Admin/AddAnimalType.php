@@ -31,7 +31,7 @@ class AddAnimalType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1000M',
+                        'maxSize' => '3000M',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',

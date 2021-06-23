@@ -3,6 +3,10 @@
 {% block title %}Back-office : Boutique{% endblock %}
 
 {% block body %}
+    {{ form_start(formCategorie) }}
+    {{ form_end(formCategorie) }}
 
-
+    {% for categorie in categories %}
+        <h4>{{ categorie.name }}</h4>
+    {% endfor %}
 {% endblock %}
