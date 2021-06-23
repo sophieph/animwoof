@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AnimalRepository::class)
@@ -20,27 +21,36 @@ class Animal
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $nom;
 
     /**
      * @ORM\ManyToOne(targetEntity=Espece::class, inversedBy="animals")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
      */
     private $espece;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $race;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\NotNull
+     * @Assert\PositiveOrZero
      */
     private $age;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\PositiveOrZero
      */
     private $poids;
 

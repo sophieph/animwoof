@@ -26,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Email()
      * @Assert\NotNull
      */
@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="array")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\NotNull
      */
     private $roles = [];
@@ -47,6 +47,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $pseudo;
 
@@ -63,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->roles = array('ROLE_ADMIN');
+        $this->roles = array('ROLE_USER');
         $this->reservations = new ArrayCollection();
 
     }
