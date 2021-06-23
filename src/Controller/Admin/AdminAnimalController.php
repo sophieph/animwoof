@@ -2,11 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Animal;
-use App\Entity\Espece;
-use App\Form\Admin\AddAnimalType;
-use App\Form\Admin\AddEspeceType;
-use App\Services\Admin\AnimalService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +9,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use App\Entity\Animal;
+use App\Entity\Espece;
+use App\Form\Admin\AddAnimalType;
+use App\Form\Admin\AddEspeceType;
+use App\Services\Admin\AnimalService;
+use App\Services\Admin\ImageService;
 
 /**
  * @Route("/admin/animaux")
@@ -112,7 +114,7 @@ class AdminAnimalController extends AbstractController
      * @param Animal $animal
      * @return RedirectResponse|Response
      */
-    public function editAnimal(Request $request, Animal $animal, AnimalService $animalService)
+    public function editAnimal(Request $request, Animal $animal, ImageService $imageService)
     {
         if ($animal == null) {
             $this->addFlash('danger', 'Animal introuvable');
@@ -128,12 +130,12 @@ class AdminAnimalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $img = $form->get('photo')->getData();
-            if ($img != null) {
-                unlink($this->getParameter('animal_images_directory') . $photo);
-                $file = $animalService->upload($img);
-                $animal->setPhoto($file);
-            }
-
+            //if ($img != null) {
+            //    unlink($this->getParameter('animal_images_directory') . $photo);
+            //}
+            $file = $imageService->upload($img, $this->getParameter('animal_images_directory'));
+            $animal->setPhoto($file);
+            
 
             $em->persist($animal);
             $em->flush();
