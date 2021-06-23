@@ -54,7 +54,7 @@ nav > ul > li {
     margin: 16px;
 }
 
-nav > ul > li:first-child {
+nav > ul > li:first-child, .footer > a {
     font-weight: 900;
 }
 
@@ -66,4 +66,21 @@ nav > ul > li:first-child {
 .content {
     background-color: #fff;
     padding:20px;
+}
+
+.main-body {
+    min-height: 100vh;
+    margin-bottom: -12rem;
+}
+
+.footer{
+    background: #222222;
+    padding: 2rem 1rem;
+    &-body {
+        height: 12rem;
+    }
+    a {
+        color: #F5F5F5;
+        text-align: center;
+    }
 }
