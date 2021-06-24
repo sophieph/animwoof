@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ categorie.nom }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Catégorie : {{ categorie.nom }}</h1>
+            </div>
+        </div>
+
+        {% if articles is not null %}
+            {% for article in articles %}
+                <div class="row" style="padding: 50px; border-bottom: 1px solid #333;">
+                    <div class="col-sm-12">
+                        <h2>{{ article.titre }}</h2>
+                        <p><i>Posté le {{ article.createdAt|date('d/m/Y') }} par <b>{{ article.user.pseudo }}</b></i></p>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {{ article.contenu }}
+                            </div>
+                        </div>
+
+                        <p style="font-size: 10px;margin:50px 0 0 0;"><b>Catégorie(s)</b> : {% for categorie in article.categorie %}<a
+                                    href="{{ path('blog_categorie', {'id' : categorie.id }) }}">{{ categorie.nom }}</a> {% endfor %}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% else  %}
+            <p>Il n'y a pas d'articles pour le moment</p>
+        {% endif %}
+    </div>
+{% endblock %}
