@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-office : {{ produit.name }}{% endblock %}
+
+{% block body %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <img src="{{ asset('uploads/images/products/' ~ produit.image)}}" style="width:100px" alt="{{ produit.name }}"/>
+    <ul>
+        <li><b>Nom :</b> {{ produit.name }}</li>
+        <li><b>Prix :</b> {{ produit.price }}&euro; </li>
+        <li><b>Quantité : </b>{{ produit.quantity }}</li>
+        <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
+        <li><b>Crée le</b> {{ produit.createdAt|date('d/m/Y') }}</li>
+        <li><b>Description : </b>{{ produit.description }}</li>
+    </ul>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
+    {{ form_end(form) }}
+{% endblock %}

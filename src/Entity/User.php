@@ -62,11 +62,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Panier::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $panier;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="user")
+     */
+    private $commandes;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->roles = array('ROLE_USER');
         $this->reservations = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
 
     }
     public function getId(): ?int
@@ -209,6 +220,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($reservation->getUser() === $this) {
                 $reservation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPanier(): ?Panier
+    {
+        return $this->panier;
+    }
+
+    public function setPanier(Panier $panier): self
+    {
+        // set the owning side of the relation if necessary
+        if ($panier->getUser() !== $this) {
+            $panier->setUser($this);
+        }
+
+        $this->panier = $panier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
             }
         }
 

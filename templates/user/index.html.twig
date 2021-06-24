@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Mes commandes</h1>
+
+            <ul>
+                {% for commande in commandes %}
+                <li><a href="{{ path('commande_detail', {'id' : commande.id}) }}">Commande #{{ commande.id }}</a> - {{ commande.prixFinal }}&euro; </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

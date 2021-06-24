@@ -1,4 +1,8 @@
 Nom: Name
+Name : Name
+Prenom : Name
+Phone number : Phone number
+Zipcode : Zipcode
 Race : Race
 Age : Years
 Poids : Weight
@@ -13,3 +17,6 @@ Pseudo : Username
 Email : Email
 Mot de passe : Password
 Confirmation de mot de passe : Password confirmation
+Price : Price
+Quantity : Quantity
+Categorie : Category

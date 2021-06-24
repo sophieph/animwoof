@@ -29,7 +29,7 @@ class AdminAnimalController extends AbstractController
     /**
      * @Route("/", name="admin_animals")
      */
-    public function animals(Request $request, PaginatorInterface $paginator, AnimalService $animalService): Response
+    public function animals(Request $request, PaginatorInterface $paginator, ImageService $imageService): Response
     {
         $animals = $this->getDoctrine()->getRepository(Animal::class)->findAll();
         $animalsAdoptedReq = $this->getDoctrine()->getRepository(Animal::class)->findBy(['isAdopted' => true]);
@@ -84,7 +84,7 @@ class AdminAnimalController extends AbstractController
         if ($formAnimal->isSubmitted() && $formAnimal->isValid()){
             $img = $formAnimal->get('photo')->getData();
             if ($img) {
-                $file = $animalService->upload($img);
+                $file = $imageService->upload($img, 'animal');
                 $animal->setPhoto($file);
             }
             try {
@@ -112,6 +112,7 @@ class AdminAnimalController extends AbstractController
      * @Route("/{id}", name="admin_animals_edit")
      * @param Request $request
      * @param Animal $animal
+     * @param ImageService $imageService
      * @return RedirectResponse|Response
      */
     public function editAnimal(Request $request, Animal $animal, ImageService $imageService)
@@ -130,13 +131,11 @@ class AdminAnimalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $img = $form->get('photo')->getData();
-            //if ($img != null) {
-            //    unlink($this->getParameter('animal_images_directory') . $photo);
-            //}
-            $file = $imageService->upload($img, $this->getParameter('animal_images_directory'));
-            $animal->setPhoto($file);
-            
-
+            if ($img != null) {
+                unlink($this->getParameter('animal_images_directory') . '/' . $photo);
+                $file = $imageService->upload($img, 'animal');
+                $animal->setPhoto($file);
+            }
             $em->persist($animal);
             $em->flush();
 

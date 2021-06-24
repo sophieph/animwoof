@@ -1,12 +1,66 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Back-office : Boutique{% endblock %}
 
 {% block body %}
+
+    <h1>Boutique</h1>
+
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% if produits is not null  %}
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Catégorie</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.name }}</td>
+                <td>{{ produit.price }}</td>
+                <td>{{ produit.quantity }}</td>
+                <td>{{ produit.categorie.name }}</td>
+                <td><a href="{{ path('admin_produit_edit', {'id' : produit.id }) }}">Modifier</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+    <h2>Ajouter un produit</h2>
+
+    {{ form_start(formProduit) }}
+
+     {{ form_end(formProduit) }}
+
+
+    <h2>Liste des catégories</h2>
+
+    {% if categories is not null %}
+        {% for categorie in categories %}
+            <ul>
+                <li>{{ categorie }}</li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Ajouter une catégorie</h2>
     {{ form_start(formCategorie) }}
     {{ form_end(formCategorie) }}
-
-    {% for categorie in categories %}
-        <h4>{{ categorie.name }}</h4>
-    {% endfor %}
 {% endblock %}
