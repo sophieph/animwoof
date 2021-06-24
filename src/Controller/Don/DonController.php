@@ -31,18 +31,15 @@
         $em = $this->getDoctrine()->getManager();
         $em->persist($donateData);
         $em->flush();
-        dd($em->flush());
         return $this->redirectToRoute('comfirmDon', ['id' => $donateData->getId()]);
       }
       $userDons = new \stdClass();
-//      dd($userDons);
       $idUser = null;
       if ($this->getUser() != null) {
         $idUser = $this->getUser()->getId();
         $userDons = $this->getDoctrine()->getRepository(Don::class)->fecthUserDonList($idUser);
         
       }
-      
       return $this->render('don/index.html.twig', [
           'controller_name' => 'DonController',
           'lastDon' => $this->getDoctrine()->getRepository(Don::class)->fetchLastDon(),

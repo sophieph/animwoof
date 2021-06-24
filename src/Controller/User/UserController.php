@@ -28,7 +28,6 @@
       $commandes = $this->getDoctrine()->getRepository(Commande::class)->findBy(['user' => $user->getId()]);
       
       $dons = $this->getDoctrine()->getRepository(Don::class)->fecthUserDonList($user->getId());
-//      dd($dons);
       return $this->render('user/index.html.twig', [
           'commandes' => $commandes,
           'dons' => $dons
