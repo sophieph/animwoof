@@ -23,7 +23,7 @@
     }
     
     
-    public function fetchLastDon(): Don
+    public function fetchLastDon(): Don|null
     {
       return $this->findOneBy([], ['date_transaction' => 'ASC']);
     }
@@ -33,32 +33,38 @@
       return $this->find($idDon);
     }
     
-    public function fetchDonList(): array
+    public function fetchDonList(): \stdClass|null
     {
       //todo: pagination
-      return $this->createQueryBuilder('d')
+      $listDons = $this->createQueryBuilder('d')
           ->orderBy('d.date_transaction', 'DESC')
           ->getQuery()
           ->getResult();
+      return $this->setStdListClass($listDons);
     }
     
     public function fecthUserDonList(int $idUser): \stdClass
     {
-      $userDons = new \stdClass();
-      $userDons->list = $this->createQueryBuilder('d')
+      $userDons = $this->createQueryBuilder('d')
           ->orderBy('d.date_transaction', 'DESC')
           ->where('d.user = :idUser')
           ->setParameter('idUser', $idUser)
           ->getQuery()
           ->getResult();
-      $userDons->listTotal = count($userDons->list);
-      $userDons->listSum = array_sum(array_map(function ($don) {
-        return $don->getMontant();
-      }, $userDons->list));
-      return $userDons;
+      return $this->setStdListClass($userDons);
     }
     
     
+    private function setStdListClass(array $_list): \stdClass
+    {
+      $list = new \stdClass();
+      $list->list = !empty($_list) || $_list != null ? $_list : [];
+      $list->total = count($_list);
+      $list->sum = array_sum(array_map(function ($don) {
+        return $don->getMontant();
+      }, $_list));
+      return $list;
+    }
     
     // /**
     //  * @return Don[] Returns an array of Don objects

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DonRepository::class)
@@ -19,6 +20,7 @@ class Don
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\GreaterThanOrEqual(1)
      */
     private $montant;
 

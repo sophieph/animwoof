@@ -21,18 +21,18 @@
       
       $donateForm = $this->createForm(DonType::class, $newDon);
       $donateForm->handleRequest($request);
-      
+      $laastDon = $this->getDoctrine()->getRepository(Don::class)->fetchLastDon();
       
       if ($donateForm->isSubmitted() && $donateForm->isValid()) {
         
         $donateData = $donateForm->getData();
         $newDon->setUser($this->getUser());
         $newDon->setDateTransaction(new \DateTime());
-        dump($newDon);
-  
-        dd($donateData);
-        
-        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($donateData);
+        $em->flush();
+        dd($em->flush());
+        return $this->redirectToRoute('comfirmDon', ['id' => $donateData->getId()]);
       }
       $userDons = new \stdClass();
 //      dd($userDons);
@@ -41,34 +41,30 @@
         $idUser = $this->getUser()->getId();
         $userDons = $this->getDoctrine()->getRepository(Don::class)->fecthUserDonList($idUser);
         
-        
-//        dd($userDons);
-  
       }
       
       return $this->render('don/index.html.twig', [
           'controller_name' => 'DonController',
           'lastDon' => $this->getDoctrine()->getRepository(Don::class)->fetchLastDon(),
           'userDons' => $userDons,
-          'donnateForm' => $donateForm->createView()
+          'donnateForm' => $donateForm->createView(),
+          'donsList' => $this->getDoctrine()->getRepository(Don::class)->fetchDonList()
       ]);
-    }
-    
-    /** @Route("/list", name="all_dons") */
-    public function dons(): Response
-    {
-      $donList = $this->getDoctrine()->getRepository(Don::class)->fetchDonList();
-      dd($donList);
-//      return $this->render('don/index.html.twig', [
-//          'controller_name' => 'DonController',
-//          'lastDon' => $lastDon
-//      ]);
     }
     
     /** @Route("/{id}", name="single_don") */
     public function singleDon($id): Response
     {
       return $this->render('don/single.html.twig', [
+          'controller_name' => 'DonController',
+          'don' => $this->getDoctrine()->getRepository(Don::class)->find($id)
+      ]);
+    }
+    
+    /** @Route("/comfirm_don_message/{id}", name="comfirmDon") */
+    public function comfirmDon($id): Response
+    {
+      return $this->render('don/comfirm_don_template.html.twig', [
           'controller_name' => 'DonController',
           'don' => $this->getDoctrine()->getRepository(Don::class)->find($id)
       ]);

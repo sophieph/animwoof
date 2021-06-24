@@ -22,7 +22,7 @@
     public function donation(): Response
     {
       return $this->render('admin/donation/donation.html.twig', [
-          'donList' => $this->getDoctrine()->getRepository(Don::class)->fetchDonList()
+          'dons' => $this->getDoctrine()->getRepository(Don::class)->fetchDonList()
       ]);
     }
     

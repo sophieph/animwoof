@@ -7,7 +7,6 @@
 
   use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
   use Symfony\Component\Form\Extension\Core\Type\NumberType;
-  use Symfony\Component\Form\Extension\Core\Type\RadioType;
   use Symfony\Component\Form\Extension\Core\Type\TextareaType;
   use Symfony\Component\Form\Extension\Core\Type\SubmitType;
   use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +21,8 @@
               'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1'],
               'label' => 'Montant du don :',
               'label_attr' => ['class' => 'form-label h4 mb-2'],
-              'help' => 'Minimum 1,00 €'
+              'help' => 'Minimum 1,00 €',
+            'help_attr' => ['class' => 'fw-lighter fs-6 text']
           ])
           ->add('message', TextareaType::class, [
               'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1'],
@@ -35,7 +35,7 @@
               'label_attr' => ['class' => 'form-label h4']
           ])
           ->add('Donner', SubmitType::class, [
-              'attr' => ['class' => 'btn btn-primary text-dark rounded-0']
+              'attr' => ['class' => 'btn bg-greenlight border-0 px-5 text-dark rounded-0']
           ]);
     }
     
