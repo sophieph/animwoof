@@ -25,7 +25,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $commandes = $this->getDoctrine()->getRepository(Commande::class)->findBy(['user' => $user->getId()]);
-        
+
         return $this->render('user/index.html.twig', [
             'commandes' => $commandes,
         ]);
