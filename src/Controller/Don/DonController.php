@@ -40,7 +40,7 @@
         $userDons = $this->getDoctrine()->getRepository(Don::class)->fecthUserDonList($idUser);
         
       }
-      dd($this->getDoctrine()->getRepository(Don::class)->fetchLastDon());
+//      dd($this->getDoctrine()->getRepository(Don::class)->fetchLastDon());
       return $this->render('don/index.html.twig', [
           'controller_name' => 'DonController',
           'lastDon' => $this->getDoctrine()->getRepository(Don::class)->fetchLastDon(),
