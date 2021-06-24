@@ -13,22 +13,22 @@
                 {% if not commandes %}
                     <li><a href="{{ path('boutique') }}">N'hésitez pas à visitez notre boutique.</a></li>
                 {% else %}
-                {% for commande in commandes %}
-                <li><a href="{{ path('commande_detail', {'id' : commande.id}) }}">Commande #{{ commande.id }}</a> <i>commandé le {{ commande.createdAt|date('d/m/Y') }}</i> - {{ commande.prixFinal }}&euro; </li>
-                {% endfor %}
+                    {% for commande in commandes %}
+                    <li><a href="{{ path('commande_detail', {'id' : commande.id}) }}">Commande #{{ commande.id }}</a> <i>commandé le {{ commande.createdAt|date('d/m/Y') }}</i> - {{ commande.prixFinal }}&euro; </li>
+                    {% endfor %}
                 {% endif %}
             </ul>
         </div>
-{# list dons utilisateurs#}
+        {# list dons utilisateurs #}
         <div class="col-sm-12" id="user_don">
             <h1>Mes dons ( {{ dons.total }} | {{ dons.sum | number_format(2, ',') }} €  )</h1>
             <ul>
                 {%  if not dons.list %}
                     <li><a href="{{ path('don') }}">N'hésitez pas à faire des dons afin d'aider au développement de notre association.</a></li>
                 {% else %}
-                {% for don in dons.list %}
-                    <li><a href="{{ path('single_don', {'id' : don.id}) }}">Don #{{ don.id }}</a> <i>donné le {{ don.dateTransaction | date('d/m/y') }}</i> - {{ don.montant| number_format(2, ',') }} €{% if don.isAnonymous %} - Don anonyme {% endif%} </li>
-                {% endfor %}
+                    {% for don in dons.list %}
+                        <li><a href="{{ path('single_don', {'id' : don.id}) }}">Don #{{ don.id }}</a> <i>donné le {{ don.dateTransaction | date('d/m/y') }}</i> - {{ don.montant| number_format(2, ',') }} €{% if don.isAnonymous %} - Don anonyme {% endif%} </li>
+                    {% endfor %}
                 {% endif %}
             </ul>
         </div>
