@@ -10,7 +10,7 @@
     <div class="row text-center my-3">
         <div class="col ">
             <div class="card rounded-0 h-100 p-5 align-middle">
-                <p class="h5 m-0 p-0 mb-2">Total des Dons</p>
+                <p class="h5 m-0 p-0 mb-2">Total des dons</p>
                 <p class="h3 m-0 p-0 fw-bold">{{ donsList.total }} </p>
             </div>
         </div>
@@ -18,7 +18,7 @@
         {% if app.user %}
             <div class="col ">
                 <div class="card rounded-0 h-100 p-5 align-middle">
-                    <p class="h5 m-0 p-0 mb-2">Somme Total des Dons</p>
+                    <p class="h5 m-0 p-0 mb-2">Somme totale des Dons</p>
                     <p class="h3 m-0 p-0 fw-bold">{{ donsList.sum | number_format(2, ',') }} €</p>
                 </div>
             </div>
@@ -35,12 +35,12 @@
     <div class="card bg-transparent bg-greenlight text-dark rounded-0 my-3 p-5">
 
     {% if not lastDon %}
-        <p class="text-center fs-2 m-0 p-0">Il n'ya pas de don pour le moment, faites-en un petit pour commencer
+        <p class="text-center fs-2 m-0 p-0">Il n'y a pas de don pour le moment, faites-en un petit pour commencer
             !</p>
     {% else %}
         <h2 class="text-center">Dernier don</h2>
         <div class="row text-center">
-            <div class="col">Date de transation : <b>{{ lastDon.dateTransaction | date('d/m/y') }}</b></div>
+            <div class="col">Date de transaction : <b>{{ lastDon.dateTransaction | date('d/m/y') }}</b></div>
             <div class="col">Montant: <b>{{ lastDon.montant| number_format(2, ',') }} €</b></div>
         </div>
         <div class="border border-2 border-white my-3 p-3">
@@ -53,7 +53,7 @@
 
     {% if not app.user %}
         <div class="card border-0 my-3 text-center p-5">
-            <h3><a href="{{ path('login') }}">Connectez-vous</a> ou <a href="{{ path('signup') }}">inscrivez vous</a>
+            <h3><a href="{{ path('login') }}">Connectez-vous</a> ou <a href="{{ path('signup') }}">inscrivez-vous</a>
                 pour faire un don</h3>
         </div>
     {% else %}
@@ -66,7 +66,7 @@
                     </div>
                     <div class="card-body p-0">
                         {% if not userDons.list %}
-                            <h4 class="text-center m-5">Faites un dons afin de les voir apparaitre ici</h4>
+                            <h4 class="text-center m-5">Faites un don afin de les voir apparaitre ici</h4>
                         {% else %}
                             <table class="table table-striped table-hover">
                                 <thead>
