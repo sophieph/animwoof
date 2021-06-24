@@ -3,6 +3,41 @@
 
 {% block body %}
     <div class="container">
-        <h1>index boutique</h1>
+        <h1>Boutique</h1>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="row">
+            {% for produit in produits %}
+                <div class="col-sm-3">
+                    <div class="card" style="width: 18rem; opacity:{% if produit.quantity == 0 %}0.5 {% else %}1 {% endif %}">
+                        <a href="{{ path('boutique_produit_description', {'id' : produit.id}) }}">
+                            <img src="{{ asset('uploads/images/products/' ~ produit.image)}}" class="card-img-top"  alt="{{ produit.name }}"/>
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ produit.name }}</h5>
+
+                            <ul>
+                                <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
+                                <li><b>Prix : </b> {{ produit.price }}&euro;</li>
+
+                            </ul>
+                            <p class="card-text">
+                                {{ produit.description }}
+                            </p>
+                            <button><a href="{{ path('panier_add', {'id' : produit.id }) }}" class="">Ajouter au panier</a></button>
+                        </div>
+                        <a href="{{ path('boutique_produit_description', {'id' : produit.id}) }}">
+                            En voir plus
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
 {% endblock %}

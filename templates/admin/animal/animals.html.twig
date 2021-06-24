@@ -50,7 +50,6 @@
             <th>Espèce</th>
             <th>Age</th>
             <th></th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -74,14 +73,13 @@
     {{ form_start(formAnimal) }}
 
     {{ form_end(formAnimal) }}
+
     <h2>Ajouter une espèce</h2>
     {{ form_start(formEspece) }}
-    <div class="">
-        <div class="">
+    <div>
+        <div>
             {{ form_row(formEspece.nom) }}
         </div>
-
-
     </div>
 
     {{ form_end(formEspece) }}

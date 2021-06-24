@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProductsRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Products
 {
@@ -33,7 +36,7 @@ class Products
     private $price;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="date")
      */
     private $created_at;
 
@@ -43,10 +46,27 @@ class Products
     private $quantity;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="product")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categorie;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Panier::class, mappedBy="produits")
+     */
+    private $paniers;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime('now');
+        $this->paniers = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -89,12 +109,12 @@ class Products
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -121,6 +141,54 @@ class Products
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function deleteImage(){
+        if(file_exists(__DIR__.'/../../public/uploads/products/'.$this->image)){
+            unlink(__DIR__.'/../../public/uploads/products/'.$this->image);
+        }
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->addProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            $panier->removeProduit($this);
+        }
 
         return $this;
     }

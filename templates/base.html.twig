@@ -10,43 +10,69 @@
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">
         {% endblock %}
-
     </head>
     <body id="app">
 
-    <div class="wrapper">
-        <header>
-            <h1>Animwoof</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ path('homepage') }}">Accueil</a></li>
-                    <li><a href="{{ path('adoption') }}">Adoption</a></li>
-                    <li><a href="{{ path('boutique_index') }}">Boutique</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="{{ path('don') }}">Faire un don</a></li>
-                    {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_dashboard') }}">Back-office</a></li>{% endif %}
-                </ul>
-            </nav>
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.username }}, <a href="{{ path('logout') }}">Logout</a>
-                </div>
-            {% else %}
-                <a href="{{ path('login') }}">Log in</a>
-                <a href="{{ path('signup') }}">Sign up</a>
-            {% endif %}
-        </header>
+        <div class="wrapper">
+            <header>
+                <h1><a href="{{ path('homepage') }}">Animwoof</a></h1>
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                        <li><a href="{{ path('adoption') }}">Adoption</a></li>
+                        <li><a href="{{ path('boutique') }}">Boutique</a></li>
+                        <li><a href="#">Donation</a></li>
+                        <li><a href="{{ path('blog') }}">Blog</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_dashboard') }}">Back-office</a></li>{% endif %}
+                        <li><a href="{{ path('panier') }}">
+                            <i class="fas fa-shopping-bag"></i>
+                            {% set sess = app.session.get('panier') %}
+                            {% set total = 0 %}
+                            {% for key,value in sess %}
+                                {% set total = total + value %}
+                            {% endfor %}
+                            <span class="articles">
+                            ({{ total }})</span> </a></li>
+                    </ul>
+                </nav>
+                {% if app.user %}
+                    <div class="mb-3">
+                        <ul>
+                            <li><b>Hello you</b> </li>
+                            <li><a href="{{ path('profil') }}">Mon compte</a> -  <a style="font-size:10px;" href="{{ path('logout') }}">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <ul>
+                        <li>
+                            <a href="{{ path('login') }}">Log in</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('signup') }}">Sign up</a>
+                        </li>
+                    </ul>
 
-        <div class="content">
-            {% block body %}{% endblock %}
+                {% endif %}
+            </header>
+
+
+            <div class="content">
+                {% block body %}{% endblock %}
+            </div>
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+            </script>
+
+            <footer>
+
+            </footer>
         </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
-        </script>
     </body>
 </html>
 
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+    <script src="https://kit.fontawesome.com/036919087b.js" crossorigin="anonymous"></script>
+
 {% endblock %}

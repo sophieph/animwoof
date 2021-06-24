@@ -29,6 +29,11 @@ class Categorie
      */
     private $product;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     public function __construct()
     {
         $this->product = new ArrayCollection();

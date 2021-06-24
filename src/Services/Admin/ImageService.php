@@ -12,27 +12,38 @@ use App\Entity\Categorie;
 
 class ImageService
 {
-    private $targetDirectory;
+    private $animalDirectory;
+    private $produitDirectory;
     private $slugger;
 
-    public function __construct($targetDirectory, SluggerInterface $slugger)
+    public function __construct($animalDirectory, $produitDirectory, SluggerInterface $slugger)
     {
-        $this->targetDirectory = $targetDirectory;
+        $this->animalDirectory = $animalDirectory;
+        $this->produitDirectory = $produitDirectory;
         $this->slugger = $slugger;
     }
 
-    public function upload(UploadedFile $file, $targetDirectory)
+    public function upload(UploadedFile $file, $categorie)
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
-        $file->move($targetDirectory, $fileName);
+        if ($categorie == 'animal') {
+            $file->move($this->getAnimalDirectory(), $fileName);
+        } else if ($categorie == 'produit') {
+            $file->move($this->getProduitDirectory(), $fileName);
+        }
 
         return $fileName;
     }
 
-    public function getTargetDirectory()
+    public function getAnimalDirectory()
     {
-        return $this->targetDirectory;
+        return $this->animalDirectory;
+    }
+
+    public function getProduitDirectory()
+    {
+        return $this->produitDirectory;
     }
 }

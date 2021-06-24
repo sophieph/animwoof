@@ -1,8 +1,59 @@
 {% extends 'admin/layout.html.twig' %}
 
-{% block title %}Back-office : Blog{% endblock %}
+{% block title %}Back-office : Blo{% endblock %}
 
 {% block body %}
+    <h1>Blog</h1>
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+
+        <!-- Articles -->
+        <h2>Liste des articles</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Crée le</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.titre }}</td>
+                    <td>{{ article.createdAt|date('d/m/Y') }}</td>
+                    <td><a href="{{ path('admin_animals_edit', {'id' : adopted.id }) }}">Modifier</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+    <h2>Ajouter un article</h2>
+
+{#    {{ form_start(formAnimal) }}#}
+
+{#    {{ form_end(formAnimal) }}#}
+
+    <h2>Liste des catégories</h2>
+    <ul>
+        {% for categorie in categories %}
+            <li>{{ categorie.nom }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Ajouter une catégorie</h2>
+{#    {{ form_start(formEspece) }}#}
+{#            {{ form_row(formEspece.nom) }}#}
+{#    {{ form_end(formEspece) }}#}
 
 {% endblock %}

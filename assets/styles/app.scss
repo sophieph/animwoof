@@ -1,11 +1,12 @@
 /* reset */
 /* 16 * 62.5 = 1.000 */
 html {
-    font-size: 62.5%;
+    font-size: 62.5% !important;
 }
 
 body {
-    font: 1.6rem sans-serif;
+    font: 1.6rem sans-serif !important;
+    font-family: Roboto, sans-serif;
     margin: 0;
     background-color: #fbfbfb;
     color: #333;
@@ -24,6 +25,11 @@ details,summary, a {
     color: #222;
 }
 
+a, a:hover, a:visited, a:link {
+    color: #333;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
 * {
     box-sizing: border-box;
 }
@@ -75,10 +81,11 @@ details,summary, a {
 }
 
 #app button {
+    margin:10px 5px;
     border: 1px solid #333;
     background-color: #fff;
     padding: 10px;
-    width: 150px;
+    //width: 150px;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;

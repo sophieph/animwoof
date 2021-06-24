@@ -236,8 +236,8 @@ class Animal
      * @ORM\PostRemove
      */
     public function deletePhoto(){
-        if(file_exists(__DIR__.'/../../public/uploads/'.$this->photo)){
-            unlink(__DIR__.'/../../public/uploads/'.$this->photo);
+        if(file_exists(__DIR__.'/../../public/uploads/images/animals/'.$this->photo)){
+            unlink(__DIR__.'/../../public/uploads/images/animals/'.$this->photo);
         }
     }
 

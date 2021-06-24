@@ -5,8 +5,65 @@
 {% block body %}
 
     <h1>Adopter ces animaux</h1>
+    <div class="container">
+        <div class="row">
+        {% for animal in animals %}
+            <div class="col-sm-3">
+                <div class="card" style="width: 18rem; opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
+                    <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" class="card-img-top"  alt="{{ animal.race }}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ animal.nom }}</h5>
+
+                        <ul>
+                            <li><b>Espèce :</b> {{ animal.espece.nom }}</li>
+                            <li><b>Race : </b> {{ animal.race }}</li>
+                            <li><b>Age : </b> {{ animal.age }} ans</li>
+                            <li>{% if animal.isAdopted %} Il a trouvé une famille ! - Adopté le  {{ animal.dateAdoption|date('d/m/Y') }}
+                                {% else %} Il n'a pas encore de maître
+                                {% endif %}</li>
+                        </ul>
+                        <p class="card-text">
+
+                            {{ animal.description }}
+                        </p>
+                        <button><a href="{{ path('adoption_animal_description', { 'id' : animal.id}) }}" class="">En savoir davantage</a></button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
 
     <h1>Procurez-vous ces articles</h1>
+    <div class="container">
+        <div class="row">
+            {% for produit in produits %}
+                <div class="col-sm-3">
+                    <div class="card" style="width: 18rem; opacity:{% if produit.quantity == 0 %}0.5 {% else %}1 {% endif %}">
+                        <a href="{{ path('boutique_produit_description', {'id' : produit.id}) }}">
+                            <img src="{{ asset('uploads/images/products/' ~ produit.image)}}" class="card-img-top"  alt="{{ produit.name }}"/>
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ produit.name }}</h5>
 
+                            <ul>
+                                <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
+                                <li><b>Prix : </b> {{ produit.price }}&euro;</li>
+
+                            </ul>
+                            <p class="card-text">
+                                {{ produit.description }}
+                            </p>
+                            <button><a href="{{ path('panier_add', {'id' : produit.id }) }}" class="">Ajouter au panier</a></button>
+                        </div>
+                        <a href="{{ path('boutique_produit_description', {'id' : produit.id}) }}">
+                            En voir plus
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     <h1>Faites un don</h1>
 {% endblock %}
