@@ -26,6 +26,8 @@
         <li><b>Contenu :</b> {{ article.contenu}}</li>
 
     </ul>
+    <button class=""><a href="{{ path('admin_blog_delete', {'id' : article.id }) }}"> <i class="fas fa-trash-alt"></i> Supprimer l'article</a></button>
+
 
     {{ form_start(form) }}
 

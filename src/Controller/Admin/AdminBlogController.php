@@ -123,6 +123,8 @@ class AdminBlogController extends AbstractController
         $em->remove($article);
         $em->flush();
 
+        $this->addFlash('success', 'Article retiré');
+
         return $this->redirectToRoute('admin_blog');
     }
 
