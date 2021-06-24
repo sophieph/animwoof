@@ -21,19 +21,19 @@
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
+                <th>Crée le</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-{#            {% for adopted in animalsAdopted %}#}
-{#                <tr>#}
-{#                    <td>{{ adopted.id }}</td>#}
-{#                    <td>{{ adopted.nom }}</td>#}
-{#                    <td>{{ adopted.espece }}</td>#}
-{#                    <td>{{ adopted.age }}</td>#}
-{#                    <td><a href="{{ path('admin_animals_edit', {'id' : adopted.id }) }}">Modifier</a></td>#}
-{#                </tr>#}
-{#            {% endfor %}#}
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.titre }}</td>
+                    <td>{{ article.createdAt|date('d/m/Y') }}</td>
+                    <td><a href="{{ path('admin_animals_edit', {'id' : adopted.id }) }}">Modifier</a></td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
 
@@ -45,6 +45,12 @@
 
 {#    {{ form_end(formAnimal) }}#}
 
+    <h2>Liste des catégories</h2>
+    <ul>
+        {% for categorie in categories %}
+            <li>{{ categorie.nom }}</li>
+        {% endfor %}
+    </ul>
     <h2>Ajouter une catégorie</h2>
 {#    {{ form_start(formEspece) }}#}
 {#            {{ form_row(formEspece.nom) }}#}
