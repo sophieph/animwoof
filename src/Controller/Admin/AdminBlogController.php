@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Blog\Article;
+use App\Entity\Blog\Categorie;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +22,15 @@ class AdminBlogController extends AbstractController
      */
     public function blog()
     {
-        return $this->render('admin/blog/blog.html.twig');
+
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+
+        return $this->render('admin/blog/blog.html.twig',
+            [
+                'categories' => $categories,
+                'articles' => $articles
+            ]
+        );
     }
 }
