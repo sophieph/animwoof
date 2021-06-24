@@ -40,12 +40,16 @@ class AnimalRepository extends ServiceEntityRepository
 
         $rows = $this->createQueryBuilder('a')
             ->select('count(a.id)')
+            ->andWhere('a.isAdopted =  :adopted')
+            ->setParameter('adopted', false)
             ->getQuery()
             ->getSingleScalarResult();
 
         $offset = max(0, rand(0, $rows -1));
 
         $query = $this->createQueryBuilder('a')
+            ->andWhere('a.isAdopted =  :adopted')
+            ->setParameter('adopted', false)
             ->setMaxResults(3)
             ->setFirstResult($offset)
             ->getQuery();
