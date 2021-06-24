@@ -5,6 +5,7 @@ namespace App\Services\Boutique;
 use App\Entity\Commande;
 use App\Entity\CommandeDetail;
 use App\Entity\Panier;
+use App\Entity\Products;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
@@ -46,6 +47,7 @@ class CommandeService
             $commandeDetail->setProduit($produit['produit']);
             $this->em->persist($commandeDetail);
             $this->em->flush();
+            $this->changeQuantiteProduit($produit['produit'], $produit['quantite']);
         }
 
         $this->session->remove('panier');
@@ -53,8 +55,11 @@ class CommandeService
         return $commande;
     }
 
-    public function changeQuantiteProduit()
+    public function changeQuantiteProduit(Products $produit, int $quantite)
     {
-
+        $quantiteFinale = $produit->getQuantity() - $quantite;
+        $produit->setQuantity($quantiteFinale);
+        $this->em->persist($produit);
+        $this->em->flush();
     }
 }
