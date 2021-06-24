@@ -29,6 +29,11 @@ class Categorie
      */
     private $product;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $photo;
+
     public function __toString()
     {
         return $this->getName();
@@ -82,6 +87,18 @@ class Categorie
                 $product->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

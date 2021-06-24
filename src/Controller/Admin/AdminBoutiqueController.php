@@ -40,6 +40,7 @@ class AdminBoutiqueController extends AbstractController
 
         if ($formCategorie->isSubmitted() && $formCategorie->isValid()){
             $name = $request->request->get('name');
+            $img = $formCategorie->get('photo')->getData();
             $categorieExist = $this->getDoctrine()->getRepository(Categorie::class)->findOneBy(['name' => $name]);
 
             // On vérifie si la catégorie existe
@@ -48,11 +49,18 @@ class AdminBoutiqueController extends AbstractController
                 return $this->redirectToRoute('admin_shop');
             }
 
+            if ($img != null) {
+                unlink($this->getParameter('categorie_images_directory') . '/' . $img);
+                $file = $imageService->upload($img, 'categorie');
+                $produit->setImage($file);
+            }
+
             try {
                 $em->persist($categorie);
                 $em->flush();
             } catch (\Exception $exception) {
                 $this->addFlash('error', 'Il y a eu un problème.');
+                return $this->redirectToRoute('admin_shop');
             }
             $this->addFlash('success', 'Catégorie créee avec succés.');
             return $this->redirectToRoute('admin_shop');
@@ -74,6 +82,7 @@ class AdminBoutiqueController extends AbstractController
                 $em->flush();
             } catch (\Exception $exception) {
                 $this->addFlash('error', 'Il y a eu un problème.');
+                return $this->redirectToRoute('admin_shop');
             }
             $this->addFlash('success', 'Produit créee avec succés.');
             return $this->redirectToRoute('admin_shop');
@@ -130,64 +139,43 @@ class AdminBoutiqueController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="admin_produit_delete")
-     * @param Products $produit
-     * @return RedirectResponse
+     * @Route("/categorie/{id}", name="admin_categorie_edit")
+     * @param Request $request
+     * @param Categorie $categorie
+     * @return RedirectResponse|Response
      */
-    public function delete(Products $produit): RedirectResponse
+    public function editCategorie(Request $request, Categorie $categorie, ImageService $ImageService)
     {
-        if ($produit == null) {
-            $this->addFlash('error', 'Produit introuvable');
+        if ($categorie == null) {
+            $this->addFlash('danger', 'Catégorie introuvable');
+            return $this->redirectToRoute('admin_shop');
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($produit);
-        $em->flush();
 
-        $this->addFlash('success', 'Produit retiré');
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('admin_shop');
+        $photo = $categorie->getPhoto();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $img = $form->get('photo')->getData();
+            if ($img != null) {
+                unlink($this->getParameter('categorie_images_directory') . $photo);
+                $file = $ImageService->upload($img);
+                $animal->setPhoto($file);
+            }
+
+            $em->persist($animal);
+            $em->flush();
+
+            $this->addFlash('success', 'Catégorie modifié avec succès');
+            return $this->redirectToRoute('admin_shop');
+
+        }
+        return $this->render('admin/shop/edit-categorie.html.twig', [
+            'formEditCategorie' => $form->createView(),
+            'categorie' => $categorie,
+        ]);
     }
-
-//    /**
-//     * @Route("/{id}", name="admin_categorie_edit")
-//     * @param Request $request
-//     * @param Categorie $categorie
-//     * @return RedirectResponse|Response
-//     */
-//    public function editCategorie(Request $request, Categorie $categorie, ImageService $ImageService)
-//    {
-//        if ($categorie == null) {
-//            $this->addFlash('danger', 'Catégorie introuvable');
-//            return $this->redirectToRoute('admin_shop');
-//        }
-//
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $form = $this->createForm(CategorieType::class, $categorie);
-//        $form->handleRequest($request);
-//
-//        $photo = $categorie->getPhoto();
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $img = $form->get('photo')->getData();
-//            if ($img != null) {
-//                unlink($this->getParameter('categorie_images_directory') . $photo);
-//                $file = $ImageService->upload($img);
-//                $animal->setPhoto($file);
-//            }
-//
-//
-//            $em->persist($animal);
-//            $em->flush();
-//
-//            $this->addFlash('success', 'Catégorie modifié avec succès');
-//            return $this->redirectToRoute('admin_categorie_edit', array('id' => $categorie->getId()));
-//
-//        }
-//        return $this->render('admin/categorie/edit-categorie.html.twig', [
-//            'form-edit-categorie' => $form->createView(),
-//            'categorie' => $categorie,
-//        ]);
-//    }
 }
