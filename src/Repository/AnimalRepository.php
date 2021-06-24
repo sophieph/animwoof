@@ -35,13 +35,26 @@ class AnimalRepository extends ServiceEntityRepository
             ->execute()
             ;
     }
-//    public function getRandomAnimals(): ?Animal {
-//        return $this->createQueryBuilder('a')
-//            ->setMaxResults(5)
-//            ->getQuery()
-//            ->getResult()
-//            ;
-//    }
+
+    public function getRandomAnimals() {
+
+        $rows = $this->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $offset = max(0, rand(0, $rows -1));
+
+        $query = $this->createQueryBuilder('a')
+            ->setMaxResults(3)
+            ->setFirstResult($offset)
+            ->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
+
     // /**
     //  * @return Animal[] Returns an array of Animal objects
     //  */
