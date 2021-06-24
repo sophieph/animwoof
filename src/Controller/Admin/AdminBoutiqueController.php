@@ -49,11 +49,8 @@ class AdminBoutiqueController extends AbstractController
                 return $this->redirectToRoute('admin_shop');
             }
 
-            if ($img != null) {
-                unlink($this->getParameter('categorie_images_directory') . '/' . $img);
-                $file = $imageService->upload($img, 'categorie');
-                $produit->setImage($file);
-            }
+            $file = $imageService->upload($img, 'categorie');
+            $categorie->setPhoto($file);
 
             try {
                 $em->persist($categorie);
@@ -161,7 +158,7 @@ class AdminBoutiqueController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $img = $form->get('photo')->getData();
             if ($img != null) {
-                unlink($this->getParameter('categorie_images_directory') . $photo);
+                unlink($this->getParameter('categorie_images_directory') . '/' . $photo);
                 $file = $ImageService->upload($img);
                 $animal->setPhoto($file);
             }
