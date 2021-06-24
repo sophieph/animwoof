@@ -32,22 +32,24 @@
         {% endif %}
     </div>
     {% if app.user %}
-    <div class="card bg-transparent bg-greenlight text-dark rounded-0 my-3 p-5">
+        <div class="card bg-transparent bg-greenlight text-dark rounded-0 my-3 p-5">
 
-    {% if not lastDon %}
-        <p class="text-center fs-2 m-0 p-0">Il n'ya pas de don pour le moment, faites-en un petit pour commencer
-            !</p>
-    {% else %}
-        <h2 class="text-center">Dernier don</h2>
-        <div class="row text-center">
-            <div class="col">Date de transation : <b>{{ lastDon.dateTransaction | date('d/m/y') }}</b></div>
-            <div class="col">Montant: <b>{{ lastDon.montant| number_format(2, ',') }} €</b></div>
-        </div>
-        <div class="border border-2 border-white my-3 p-3">
-            <p>{{ lastDon.message | raw }}</p>
-        </div>
-        <p class="text-end"><em>{% if lastDon.isAnonymous %}Donateur anonyme {% else %} {{ lastDon.user.pseudo }} {% endif %}</em></p>
-    {% endif %}
+            {% if not lastDon %}
+                <p class="text-center fs-2 m-0 p-0">Il n'ya pas de don pour le moment, faites-en un petit pour commencer
+                    !</p>
+            {% else %}
+                <h2 class="text-center">Dernier don</h2>
+                <div class="row text-center">
+                    <div class="col">Date de transation : <b>{{ lastDon.dateTransaction | date('d/m/y') }}</b></div>
+                    <div class="col">Montant: <b>{{ lastDon.montant| number_format(2, ',') }} €</b></div>
+                </div>
+                <div class="border border-2 border-white my-3 p-3 text-center">
+                    <em>« {{ lastDon.message | raw }} »</em>
+                </div>
+                <p class="text-end">
+                    <em>{% if lastDon.isAnonymous %}Donateur anonyme {% else %} {{ lastDon.user.pseudo }} {% endif %}</em>
+                </p>
+            {% endif %}
         </div>
     {% endif %}
 

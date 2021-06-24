@@ -29,7 +29,6 @@
     /** @Route("/{id}", name="admin_single_don")   */
     public function don($id): Response
     {
-//      dd($this->getDoctrine()->getRepository(Don::class)->find($id));
       return $this->render('admin/donation/single.html.twig', [
           'don' => $this->getDoctrine()->getRepository(Don::class)->find($id)
       ]);

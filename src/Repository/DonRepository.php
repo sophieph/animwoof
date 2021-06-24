@@ -25,7 +25,7 @@
     
     public function fetchLastDon(): Don|null
     {
-      return $this->findOneBy([], ['date_transaction' => 'ASC']);
+      return $this->findOneBy([], ['date_transaction' => 'DESC']);
     }
     
     public function fecthDonById(int $idDon): Don
