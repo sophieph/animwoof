@@ -13,13 +13,15 @@ use App\Entity\Categorie;
 class ImageService
 {
     private $animalDirectory;
+    private $categorieDirectory;
     private $produitDirectory;
     private $slugger;
 
-    public function __construct($animalDirectory, $produitDirectory, SluggerInterface $slugger)
+    public function __construct($animalDirectory, $produitDirectory, $categorieDirectory, SluggerInterface $slugger)
     {
         $this->animalDirectory = $animalDirectory;
         $this->produitDirectory = $produitDirectory;
+        $this->categorieDirectory = $categorieDirectory;
         $this->slugger = $slugger;
     }
 
@@ -32,9 +34,11 @@ class ImageService
             $file->move($this->getAnimalDirectory(), $fileName);
         } else if ($categorie == 'produit') {
             $file->move($this->getProduitDirectory(), $fileName);
+        } else if ($categorie == 'categorie') {
+            $file->move($this->getCategorieDirectory(), $fileName);
         }
-
         return $fileName;
+
     }
 
     public function getAnimalDirectory()
@@ -45,5 +49,9 @@ class ImageService
     public function getProduitDirectory()
     {
         return $this->produitDirectory;
+    }
+    public function getCategorieDirectory()
+    {
+        return $this->categorieDirectory;
     }
 }

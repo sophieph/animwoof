@@ -6,6 +6,7 @@
 parameters:
     animal_images_directory: '%kernel.project_dir%/public/uploads/images/animals'
     product_images_directory: '%kernel.project_dir%/public/uploads/images/products'
+    categorie_images_directory: '%kernel.project_dir%/public/uploads/images/categorie'
 
 services:
     # default configuration for services in *this* file
@@ -34,3 +35,4 @@ services:
         arguments:
             $produitDirectory: '%product_images_directory%'
             $animalDirectory: '%animal_images_directory%'
+            $categorieDirectory: '%categorie_images_directory%'
