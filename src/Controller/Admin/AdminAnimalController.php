@@ -148,4 +148,24 @@ class AdminAnimalController extends AbstractController
             'animal' => $animal,
         ]);
     }
+
+    /**
+     * @Route("/delete/{id}", name="admin_animals_delete")
+     * @param Animal $animal
+     * @return RedirectResponse
+     */
+    public function delete(Animal $animal): RedirectResponse
+    {
+        if ($animal == null) {
+            $this->addFlash('error', 'Animal introuvable');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($animal);
+        $em->flush();
+        $this->addFlash('success', 'Animal retiré');
+
+
+        return $this->redirectToRoute('admin_animals');
+    }
 }

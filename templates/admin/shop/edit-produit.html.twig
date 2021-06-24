@@ -19,6 +19,7 @@
         <li><b>Crée le</b> {{ produit.createdAt|date('d/m/Y') }}</li>
         <li><b>Description : </b>{{ produit.description }}</li>
     </ul>
+    <button class=""><a href="{{ path('admin_produit_delete', {'id' : produit.id }) }}"> <i class="fas fa-trash-alt"></i> Enlever de la vente</a></button>
 
     {{ form_start(form) }}
 

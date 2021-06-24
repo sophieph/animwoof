@@ -29,6 +29,8 @@
         {% endif %}
     </ul>
 
+    <button class=""><a href="{{ path('admin_animals_delete', {'id' : animal.id }) }}"> <i class="fas fa-trash-alt"></i> Enlever de l'adoption</a></button>
+
     {{ form_start(form) }}
 
     {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
