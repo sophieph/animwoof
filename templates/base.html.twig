@@ -38,7 +38,8 @@
                 {% if app.user %}
                     <div class="mb-3">
                         <ul>
-                            <li>Hello you - <a href="{{ path('logout') }}">Se déconnecter</a></li>
+                            <li><b>Hello you</b> </li>
+                            <li><a href="{{ path('profil') }}">Mon compte</a> -  <a style="font-size:10px;" href="{{ path('logout') }}">Se déconnecter</a></li>
                         </ul>
                     </div>
                 {% else %}
