@@ -10,7 +10,7 @@
 
             <ul>
                 {% for commande in commandes %}
-                <li><a href="{{ path('commande_detail', {'id' : commande.id}) }}">Commande #{{ commande.id }}</a> - {{ commande.prixFinal }}&euro; </li>
+                <li><a href="{{ path('commande_detail', {'id' : commande.id}) }}">Commande #{{ commande.id }}</a> <i>commandé le {{ commande.createdAt|date('d/m/Y') }}</i> - {{ commande.prixFinal }}&euro; </li>
                 {% endfor %}
             </ul>
         </div>

@@ -15,14 +15,14 @@
 
         <div class="wrapper">
             <header>
-                <h1>Animwoof</h1>
+                <h1><a href="{{ path('homepage') }}">Animwoof</a></h1>
                 <nav>
                     <ul>
                         <li><a href="{{ path('homepage') }}">Accueil</a></li>
                         <li><a href="{{ path('adoption') }}">Adoption</a></li>
                         <li><a href="{{ path('boutique') }}">Boutique</a></li>
                         <li><a href="#">Donation</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a href="{{ path('blog') }}">Blog</a></li>
                         {% if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('admin_dashboard') }}">Back-office</a></li>{% endif %}
                         <li><a href="{{ path('panier') }}">
                             <i class="fas fa-shopping-bag"></i>
@@ -54,18 +54,7 @@
 
                 {% endif %}
             </header>
-            {% if is_granted('ROLE_ADMIN') %}
-            <div class="nav-admin">
-                <h1>Back-office</h1>
 
-                <ul>
-                    <li><a href="{{ path('admin_animals') }}">Animaux</a></li>
-                    <li><a href="{{ path('admin_shop') }}">Boutique</a></li>
-                    <li><a href="{{ path('admin_donation') }}">Donation</a></li>
-                    <li><a href="{{ path('admin_blog') }}">Blog</a></li>
-                </ul>
-            </div>
-            {% endif %}
 
             <div class="content">
                 {% block body %}{% endblock %}
