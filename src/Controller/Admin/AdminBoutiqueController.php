@@ -129,6 +129,26 @@ class AdminBoutiqueController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/delete/{id}", name="admin_produit_delete")
+     * @param Products $produit
+     * @return RedirectResponse
+     */
+    public function delete(Products $produit): RedirectResponse
+    {
+        if ($produit == null) {
+            $this->addFlash('error', 'Produit introuvable');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($produit);
+        $em->flush();
+
+        $this->addFlash('success', 'Produit retiré');
+
+        return $this->redirectToRoute('admin_shop');
+    }
+
 //    /**
 //     * @Route("/{id}", name="admin_categorie_edit")
 //     * @param Request $request

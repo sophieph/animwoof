@@ -1,6 +1,6 @@
 {% extends 'admin/layout.html.twig' %}
 
-{% block title %}Back-office : Blo{% endblock %}
+{% block title %}Back-office : Blog{% endblock %}
 
 {% block body %}
     <h1>Blog</h1>
@@ -31,7 +31,7 @@
                     <td>{{ article.id }}</td>
                     <td>{{ article.titre }}</td>
                     <td>{{ article.createdAt|date('d/m/Y') }}</td>
-                    <td><a href="{{ path('admin_animals_edit', {'id' : adopted.id }) }}">Modifier</a></td>
+                    <td><a href="{{ path('admin_blog_edit', {'id' : article.id}) }}">Modifier</a></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -41,9 +41,9 @@
 
     <h2>Ajouter un article</h2>
 
-{#    {{ form_start(formAnimal) }}#}
+    {{ form_start(formArticle) }}
 
-{#    {{ form_end(formAnimal) }}#}
+    {{ form_end(formArticle) }}
 
     <h2>Liste des catégories</h2>
     <ul>
@@ -52,8 +52,7 @@
         {% endfor %}
     </ul>
     <h2>Ajouter une catégorie</h2>
-{#    {{ form_start(formEspece) }}#}
-{#            {{ form_row(formEspece.nom) }}#}
-{#    {{ form_end(formEspece) }}#}
+    {{ form_start(formCategorie) }}
+    {{ form_end(formCategorie) }}
 
 {% endblock %}
