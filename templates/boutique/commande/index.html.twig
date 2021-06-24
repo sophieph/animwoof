@@ -1,20 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CommandeController!{% endblock %}
+{% block title %}Commande {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h2>Commande passée, félicitations !</h2>
+            <p>Voici un détail de la commande</p>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/sophieph/Desktop/AW/Cours8-Symfony/animwoof/src/Controller/Boutique/CommandeController.php'|file_link(0) }}">src/Controller/Boutique/CommandeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/sophieph/Desktop/AW/Cours8-Symfony/animwoof/templates/boutique/commande/index.html.twig'|file_link(0) }}">templates/boutique/commande/index.html.twig</a></code></li>
-    </ul>
+
+            <table style="margin:10rem 0; text-align:left;">
+                <tbody>
+                {% for item in commande.commandeDetails %}
+                    <tr>
+                        <td><img src="{{ asset('uploads/images/products/' ~ item.produit.image)}}" class="card-img-top"  alt="{{ item.produit.name }}" style="width:50px;"/>
+                        </td>
+                        <td>
+                            <p>
+                                <b><u>{{ item.produit.name }}</u></b> <br>
+                                <b>Catégorie : </b> {{ item.produit.categorie.name }} <br>
+                                <b>Prix : </b> {{ item.produit.price }}&euro; <br>
+                                <b>Quantité : </b> {{ item.quantite }}
+
+                            </p>
+
+                        </td>
+                        <td>
+                            <p>{{ item.quantite }} x {{ item.produit.price }}&euro;</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot style="background-color: #fff;">
+                <tr style="background-color: #fff; padding:10px 0; font-weight: 800; text-transform: uppercase;">
+                    <td></td>
+                    <td style="text-align:right;">Total :</td>
+                    <td>{{ commande.prixFinal }}&euro;</td>
+                </tr>
+                </tfoot>
+            </table>
+
+
+            <p style="margin:10rem 0;">Merci à vous ! </p>
+
+        </div>
+    </div>
 </div>
+
 {% endblock %}

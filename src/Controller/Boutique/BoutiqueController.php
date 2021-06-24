@@ -32,7 +32,7 @@ class BoutiqueController extends AbstractController
      * @Route("/produit/{id}", name="boutique_produit_description")
      * @param Products $produit
      */
-    public function produit(Products $produit)
+    public function produit(Products $produit): Response
     {
         return $this->render('boutique/produit-description.html.twig', [
             'produit' => $produit

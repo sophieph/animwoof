@@ -23,7 +23,7 @@
                     <p>
                        <b><u>{{ item.produit.name }}</u></b> <br>
                         <b>Catégorie : </b> {{ item.produit.categorie.name }} <br>
-                        <b>Prix : </b> {{ item.produit.price }} <br>
+                        <b>Prix : </b> {{ item.produit.price }}&euro; <br>
                     </p>
                     <p class="cart-delete">
                         <a href="{{ path('panier_remove_one', {'id' :  item.produit.id }) }}"><i
@@ -36,12 +36,16 @@
                             Supprimer
                         </a></p>
                 </td>
+                <td>
+                    <p>{{ item.quantite }} x {{ item.produit.price }}&euro;</p>
+                </td>
             </tr>
             {% endfor %}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td>Total</td>
+            <tfoot style="background-color: #fff;">
+                <tr style="background-color: #fff; padding:10px 0; font-weight: 800; text-transform: uppercase;">
+                    <td></td>
+                    <td style="text-align:right;">Total :</td>
                     <td>{{ totalPrix }}&euro;</td>
                 </tr>
             </tfoot>
