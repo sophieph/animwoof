@@ -1,20 +1,115 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DonController!{% endblock %}
+{% block title %}Faites un don ! | Animwoof{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="card bg-dark text-center text-uppercase rounded-0 text-white my-3">
+        <h1>Faire une don</h1>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="row text-center my-3">
+        <div class="col ">
+            <div class="card rounded-0 h-100 p-5 align-middle">
+                <p class="h5 m-0 p-0 mb-2">Total des Dons</p>
+                <p class="h3 m-0 p-0 fw-bold">{{ donsList.total }} </p>
+            </div>
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/sophieph/Desktop/AW/Cours8-Symfony/animwoof/src/Controller/Don/DonController.php'|file_link(0) }}">src/Controller/Don/DonController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/sophieph/Desktop/AW/Cours8-Symfony/animwoof/templates/don/don/index.html.twig'|file_link(0) }}">templates/don/don/index.html.twig</a></code></li>
-    </ul>
-</div>
+        {% if app.user %}
+            <div class="col ">
+                <div class="card rounded-0 h-100 p-5 align-middle">
+                    <p class="h5 m-0 p-0 mb-2">Somme Total des Dons</p>
+                    <p class="h3 m-0 p-0 fw-bold">{{ donsList.sum | number_format(2, ',') }} €</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col">
+                <div class="card rounded-0 h-100 p-0 align-middle">
+                    <a class="block p-5 my-auto" href="{{ path('admin_donation') }}">Tous les dons</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {% if app.user %}
+    <div class="card bg-transparent bg-greenlight text-dark rounded-0 my-3 p-5">
+
+    {% if not lastDon %}
+        <p class="text-center fs-2 m-0 p-0">Il n'ya pas de don pour le moment, faites-en un petit pour commencer
+            !</p>
+    {% else %}
+        <h2 class="text-center">Dernier don</h2>
+        <div class="row text-center">
+            <div class="col">Date de transation : <b>{{ lastDon.dateTransaction | date('d/m/y') }}</b></div>
+            <div class="col">Montant: <b>{{ lastDon.montant| number_format(2, ',') }} €</b></div>
+        </div>
+        <div class="border border-2 border-white my-3 p-3">
+            <p>{{ lastDon.message | raw }}</p>
+        </div>
+        <p class="text-end"><em>{% if lastDon.isAnonymous %}Donateur anonyme {% else %} {{ lastDon.user.pseudo }} {% endif %}</em></p>
+    {% endif %}
+        </div>
+    {% endif %}
+
+    {% if not app.user %}
+        <div class="card border-0 my-3 text-center p-5">
+            <h3><a href="{{ path('login') }}">Connectez-vous</a> ou <a href="{{ path('signup') }}">inscrivez vous</a>
+                pour faire un don</h3>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col">
+                <div class="card rounded-0 p-0">
+                    <div class="card-header text-center">
+                        <h2 class="card-title">Mes dons ({{ userDons.total }}
+                            | {{ userDons.sum | number_format(2, ',') }} €)</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        {% if not userDons.list %}
+                            <h4 class="text-center m-5">Faites un dons afin de les voir apparaitre ici</h4>
+                        {% else %}
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Montant</th>
+                                    <th scope="col">Date de don</th>
+                                    <th scope="col">Anonyme</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+
+                                {% for don in userDons.list %}
+                                    <tr>
+                                        <td>Don #{{ don.id }}</td>
+                                        <td>{{ don.montant | number_format(2, ',') }}€</td>
+                                        <td>{{ don.dateTransaction | date('d/m/y') }}</td>
+                                        <td>{% if don.isAnonymous %} Oui {% else %}Non {% endif %}</td>
+                                        <td><a href="{{ path('single_don', {'id' : don.id}) }}"><i
+                                                        class="fas fa-eye"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card rounded-0">
+                    <div class="card-header text-center">
+                        <h2 class="card-title">Faites un don</h2>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(donnateForm) }}
+                        {{ form_end(donnateForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}

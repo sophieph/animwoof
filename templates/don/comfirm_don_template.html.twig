@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Faites un don ! | Animwoof{% endblock %}
+
+{% block body %}
+
+    <div class="card bg-greenlight border-0 shadow-lg rounded-0 p-5 m-5" role="alert">
+        <h2 class="p-5 m-5 text-center">Merci {% if not don.isAnonymous %} {{ don.user.pseudo }}{% endif %} pour votre don de {{ don.montant| number_format(2, ',') }} €</h2>
+        <a class="text-end d-inline" href="{{ path('don') }}">Faire un autre don</a>
+
+    </div>
+
+{% endblock %}

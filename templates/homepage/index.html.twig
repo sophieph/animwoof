@@ -65,5 +65,22 @@
             {% endfor %}
         </div>
     </div>
-    <h1>Faites un don</h1>
+    <div class="card bg-transparent rounded-0 my-3 w-50">
+        <div class="card-header bg-transparent rounded-0 border-0">
+            <h1>Faites un don</h1>
+        </div>
+        {% if not  app.user %}
+        <div class="card border-0 my-3 text-center p-5">
+            <h3><a href="{{ path('login') }}">Connectez-vous</a> ou <a href="{{ path('signup') }}">inscrivez vous</a>
+                pour faire un don</h3>
+        </div>
+        {% else %}
+        <div class="card-body p-0 bg-transparent">
+            {{ form_start(donateForm) }}
+            {{ form_end(donateForm) }}
+        </div>
+        {% endif %}
+    </div>
+
+
 {% endblock %}

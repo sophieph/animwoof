@@ -1,0 +1,4 @@
+#test:
+#  path: /test/{age<\d+>?0}
+#  controller: App\controller\TestController::test
+#  methods: [GET]

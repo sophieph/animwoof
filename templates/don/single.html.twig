@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Faites un don ! | Animwoof{% endblock %}
+
+{% block body %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('don') }}">Faites un don</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Don #{{ don.id }}</li>
+        </ol>
+    </nav>
+    {% include 'don/template/single_don_template.html.twig' %}
+
+{% endblock %}

@@ -25,3 +25,9 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+/migrations/Version20210622141647.php
+/.php-version
+/.idea/
+/migrations/Version20210622164446.php
+/migrations/Version20210622171255.php
+/migrations/Version20210621151229.php
