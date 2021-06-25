@@ -3,6 +3,15 @@
 {% block title %}Back-office : Boutique/categorie{% endblock %}
 
 {% block body %}
+    <div class="card border-0 rounded-0 my-3 py-3 px-4 bg-greenlight">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb p-0 m-0">
+                <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Admin</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('admin_shop') }}">Gestion de la bouique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Catégorie #{{ categorie.id }}</li>
+            </ol>
+        </nav>
+    </div>
     <div class="card my-3 p-5 text-center rounded-0">
         <h1>Gestion de la catégorie #{{ categorie.id }}</h1>
     </div>

@@ -3,29 +3,44 @@
 {% block title %}Back-office : Donation{% endblock %}
 
 {% block body %}
+    <div class="card border-0 rounded-0 my-3 py-3 px-4 bg-greenlight">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb p-0 m-0">
+                <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Historique des dons</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card bg-greenlight text-center rounded-0 my-3 border-0">
+        <h1>Historique des dons</h1>
+    </div>
+    <div class="card border-0 rounder-0 my-3">
+        <div class="card-body p-0">
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Donateur</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for don in dons.list %}
+                    <tr>
+                        <td>Don {{ don.id }}</td>
+                        <td>{{ don.montant | number_format(2, ',') }} €</td>
+                        <td>{{ don.dateTransaction | date('d/m/y') }}</td>
+                        <td>{% if don.isAnonymous %} Anonyme {% else %}{{ don.user.pseudo }} {% endif %}</td>
+                        <td><a href="{{ path('admin_single_don', {'id' : don.id}) }}"><i class="fas fa-eye"></i></a></td>
+                    </tr>
 
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Montant</th>
-                <th scope="col">Date</th>
-                <th scope="col">Donateur</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for don in dons.list %}
-            <tr>
-                <td>Don {{ don.id }}</td>
-                <td>{{ don.montant | number_format(2, ',') }} €</td>
-                <td>{{ don.dateTransaction | date('d/m/y') }}</td>
-                <td>{% if don.isAnonymous %} Anonyme {% else %}{{ don.user.pseudo }} {% endif %}</td>
-                <td><a href="{{ path('admin_single_don', {'id' : don.id}) }}"><i class="fas fa-eye"></i></a></td>
-            </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        {% endfor %}
-        </tbody>
-    </table>
 
 {% endblock %}
