@@ -36,12 +36,17 @@
                 </div>
                 <div class="card-body p-0">
                     {{ form_start(formEditCategorie) }}
-                    {{ form_row(formEditCategorie.name) }}
-                    {{ form_row(formEditCategorie.photo) }}
-                    {{ form_row(formEditCategorie.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
+                    <div class="d-flex flex-row">
+                        {{ form_row(formEditCategorie.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
+                        <button class="btn text-dark border-0 px-5 rounded-0 bg-danger ">
+                            <a class="text-white" href="{{ path('admin_categorie_delete', {'id' : categorie.id }) }}">
+                                <i class="fas fa-trash-alt"></i> Supprimer la catégorie</a>
+                        </button>
+                    </div>
+{#                    {{ form_row(formEditCategorie.ajouter, {'label' : 'Sauvergarder les modifications'}) }}#}
                     {{ form_end(formEditCategorie) }}
                 </div>
-                <button class="btn-danger"><a href="{{ path('admin_categorie_delete', {'id' : categorie.id }) }}"> <i class="fas fa-trash-alt fa-sm"></i> Supprimer la catégorie ?</a></button>
+{#                <button class="btn-danger"><a href="{{ path('admin_categorie_delete', {'id' : categorie.id }) }}"> <i class="fas fa-trash-alt fa-sm"></i>  ?</a></button>#}
             </div>
         </div>
         <div class="col my-3">
