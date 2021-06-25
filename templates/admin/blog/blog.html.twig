@@ -85,7 +85,7 @@
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         {% for categorie in categories %}
-                            <li class="list-group-item">{{ categorie.nom }}</li>
+                            <li class="list-group-item">{{ categorie.nom }} <span><a href="{{ path('admin_blog_categorie_delete', {'id' : categorie.id }) }}"><i class="fas fa-trash"></i></a></span></li>
                         {% endfor %}
                     </ul>
                 </div>

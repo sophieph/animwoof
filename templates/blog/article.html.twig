@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block body %}
+    <div class="card border-0 rounded-0 my-3 py-3 px-4 bg-greenlight">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb p-0 m-0">
+                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('blog') }}">Notre actualité</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card border-0 rounded-0 my-3">
+
+        <div class="card-body p-0">
+
+                    <div class="card rounded-0 my-3">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="card-header border-0 rounded-0 bg-dark text-white p-5">
+                                    <h3 class="text-end card-title fw-bold fs-1">{{ article.titre }}</h3>
+                                </div>
+                                <div class="card-body p-5">
+                                    <p class="card-text">{{ article.contenu }}</p>
+                                </div>
+                                <div class="card-footer border-0 p-5">
+                                    {% for categorie in article.categorie %}
+                                        <small><a class="badge rounded-pill bg-greenlight p-3 mr-2 my-2" href="{{ path('blog_categorie', {'id' : categorie.id }) }}">{{ categorie.nom }}</a></small>
+                                    {% endfor %}
+                                    <p class="card-text">
+                                        <small class="text-muted"> <i>Posté le {{ article.createdAt|date('d/m/Y') }} par <b>{{ article.user.pseudo }}</b></i> </small>
+                                    </p>
+
+                                </div>
+                            </div>
+                            {# <div class="col-6 col-md-4"> #}
+                            {# <img src="..." class="img-fluid rounded-start" alt="..."> #}
+                            {# </div> #}
+
+                        </div>
+                    </div>
+
+        </div>
+    </div>
+{% endblock %}

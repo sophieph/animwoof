@@ -132,7 +132,10 @@ class AdminAnimalController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $img = $form->get('photo')->getData();
             if ($img != null) {
-                unlink($this->getParameter('animal_images_directory') . '/' . $photo);
+                if ($photo) {
+                    unlink($this->getParameter('animal_images_directory') . '/' . $photo);
+
+                }
                 $file = $imageService->upload($img, 'animal');
                 $animal->setPhoto($file);
             }

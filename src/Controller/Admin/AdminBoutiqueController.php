@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Commande;
 use App\Entity\Products;
 use App\Form\Boutique\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -31,6 +32,7 @@ class AdminBoutiqueController extends AbstractController
     {
         $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         $produits = $this->getDoctrine()->getRepository(Products::class)->findAll();
+        $commandes = $this->getDoctrine()->getRepository(Commande::class)->findAll();
         $em = $this->getDoctrine()->getManager();
 
         // Formulaire pour Catégorie
@@ -88,6 +90,7 @@ class AdminBoutiqueController extends AbstractController
         return $this->render('admin/shop/shop.html.twig', [
             'categories' => $categories,
             'produits' => $produits,
+            'commandes' => $commandes,
             'formCategorie' => $formCategorie->createView(),
             'formProduit' => $formProduit->createView()
         ]);
@@ -101,8 +104,9 @@ class AdminBoutiqueController extends AbstractController
      * @param ImageService $imageService
      * @return RedirectResponse|Response
      */
-    public function editproduit(Request $request, Products $produit, ImageService $imageService)
+    public function editproduit(Request $request, Products $produit, ImageService $imageService): RedirectResponse|Response
     {
+
         if ($produit == null) {
             $this->addFlash('danger', 'Produit introuvable');
             return $this->redirectToRoute('admin_shop');
@@ -118,7 +122,9 @@ class AdminBoutiqueController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $img = $form->get('image')->getData();
             if ($img != null) {
-                unlink($this->getParameter('product_images_directory') . '/' . $image);
+                if ($image) {
+                    unlink($this->getParameter('product_images_directory') . '/' . $image);
+                }
                 $file = $imageService->upload($img, 'produit');
                 $produit->setImage($file);
             }
@@ -139,9 +145,10 @@ class AdminBoutiqueController extends AbstractController
      * @Route("/categorie/{id}", name="admin_categorie_edit")
      * @param Request $request
      * @param Categorie $categorie
+     * @param ImageService $imageService
      * @return RedirectResponse|Response
      */
-    public function editCategorie(Request $request, Categorie $categorie, ImageService $ImageService)
+    public function editCategorie(Request $request, Categorie $categorie, ImageService $imageService)
     {
         if ($categorie == null) {
             $this->addFlash('danger', 'Catégorie introuvable');
@@ -149,6 +156,8 @@ class AdminBoutiqueController extends AbstractController
         }
 
         $em = $this->getDoctrine()->getManager();
+
+        $produits = $this->getDoctrine()->getRepository(Products::class)->findBy(['categorie' => $categorie]);
 
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
@@ -158,12 +167,15 @@ class AdminBoutiqueController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $img = $form->get('photo')->getData();
             if ($img != null) {
-                unlink($this->getParameter('categorie_images_directory') . '/' . $photo);
-                $file = $ImageService->upload($img);
-                $animal->setPhoto($file);
+                if ($photo) {
+                    unlink($this->getParameter('categorie_images_directory') . '/' . $photo);
+
+                }
+                $file = $imageService->upload($img, 'categorie');
+                $categorie->setPhoto($file);
             }
 
-            $em->persist($animal);
+            $em->persist($categorie);
             $em->flush();
 
             $this->addFlash('success', 'Catégorie modifié avec succès');
@@ -171,6 +183,7 @@ class AdminBoutiqueController extends AbstractController
 
         }
         return $this->render('admin/shop/edit-categorie.html.twig', [
+            'produits' => $produits,
             'formEditCategorie' => $form->createView(),
             'categorie' => $categorie,
         ]);
@@ -182,7 +195,7 @@ class AdminBoutiqueController extends AbstractController
      */
     public function delete(Categorie $categorie): RedirectResponse
     {
-        if ($animal == null) {
+        if ($categorie == null) {
             $this->addFlash('error', 'Catégorie introuvable.');
         }
 

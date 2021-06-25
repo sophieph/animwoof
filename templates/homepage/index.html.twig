@@ -74,6 +74,19 @@
             <div class="card rounded-0 h-100 border-0">
                 <div class="card-header bg-greenlight border-0">
                     <h2 class="text-center">Dernier news</h2>
+
+                    {% for article in articles %}
+                    <div class="card rounded-0 my-3">
+                        <div class="row g-0">
+                            <div class="col">
+                                    <h3 class="text-end"><a href="{{ path('blog_article', {'id' : article.id}) }}">{{ article.titre }}</a></h3>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
                 </div>
             </div>
         </div>

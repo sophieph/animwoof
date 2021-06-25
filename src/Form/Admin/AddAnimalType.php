@@ -30,7 +30,7 @@ class AddAnimalType extends AbstractType
                 'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
             ])
             ->add('age', IntegerType::class, [
-                'label' => 'Àge de l\'animal',
+                'label' => 'Age de l\'animal',
                 'label_attr' => ['class' => 'form-label h4 mb-2'],
                 'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
             ])
@@ -51,7 +51,7 @@ class AddAnimalType extends AbstractType
                 'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
             ])
             ->add('espece', null, [
-                    'label' => 'Espece de l\'animal',
+                    'label' => 'Espèce de l\'animal',
                     'label_attr' => ['class' => 'form-label h4 mb-2'],
                     'attr' => ['class' => 'form-select border-0 rounded-0 border-bottom border-1']
             ])

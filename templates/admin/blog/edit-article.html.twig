@@ -59,7 +59,7 @@
         <div class="card-body p-0">
             {{ form_start(form) }}
             <div class="d-flex flex-row">
-                {{ form_row(form.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
+                {{ form_row(form.ajouter, {'label' : 'Sauvegarder les modifications'}) }}
                 <button class="btn text-dark border-0 px-5 rounded-0 bg-danger ">
                     <a class="text-white" href="{{ path('admin_blog_delete', {'id' : article.id }) }}">
                         <i class="fas fa-trash-alt"></i> Supprimer l'article</a>

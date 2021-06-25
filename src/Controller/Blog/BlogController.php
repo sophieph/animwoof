@@ -44,6 +44,17 @@ class BlogController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/article/{id}", name="blog_article")
+     * @param Article $article
+     * @return Response
+     */
+    public function showArticle(Article $article) {
+        return $this->render('blog/article.html.twig', [
+            'article' => $article
+        ]);
+    }
+
 
 
 }

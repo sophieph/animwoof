@@ -17,7 +17,7 @@
     {
       $builder
           ->add('name', TextType::class, [
-              'label' => 'Nom du la catégorie',
+              'label' => 'Nom de la catégorie',
               'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1'],
               'label_attr' => ['class' => 'form-label h4 mb-2']])
           ->add('photo', FileType::class, [

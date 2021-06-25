@@ -128,4 +128,23 @@ class AdminBlogController extends AbstractController
         return $this->redirectToRoute('admin_blog');
     }
 
+    /**
+     * @Route("/delete-cat/{id}", name="admin_blog_categorie_delete")
+     * @param Categorie $categorie
+     * @return RedirectResponse
+     */
+    public function deleteCategorie(Categorie $categorie) {
+        if ($categorie == null) {
+            $this->addFlash('error', 'Catégorie introuvable');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorie);
+        $em->flush();
+
+        $this->addFlash('success', 'Catégorie retiré');
+
+        return $this->redirectToRoute('admin_blog');
+    }
+
 }
