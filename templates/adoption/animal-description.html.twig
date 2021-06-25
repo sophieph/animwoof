@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% if animal.isAdopted %} {{ animal.espece.nom }} - {{animal.nom}} {% else %} Adoptez {{ animal.nom }}{% endif %}{% endblock %}
+{% block title %}{% if animal.isAdopted %} {{ animal.espece.nom }} - {{ animal.nom }} {% else %} Adoptez {{ animal.nom }}{% endif %}{% endblock %}
 
 {% block body %}
     {% for label, messages in app.flashes %}
@@ -10,26 +10,41 @@
             </div>
         {% endfor %}
     {% endfor %}
-
-    <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" style="width:200px" alt="{{ animal.race }}"/>
-    <ul>
-        <li><b>Espèce :</b> {{ animal.espece.nom }}</li>
-        <li><b>Race : </b> {{ animal.race }}</li>
-        <li><b>Age : </b> {{ animal.age }} ans</li>
-    </ul>
-
-    {% if animal.isAdopted %} <p>Ce petit bout de chou a enfin trouvé maître à son pied ! </p> {% else %}
-
-        <p>Vous souhaitez l'adopter ?</p>
-
-        {% if app.user %}
-            {{ form_start(form) }}
-
-            {{ form_end(form) }}
-        {% else %}
-            <a href="{{ path('login') }}">Connectez-vous pour adopter ! </a>
-        {% endif %}
-    {% endif %}
-
-
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header bg-greenlight border-0"><h1 class="text-center">Je vous présente {{ animal.nom }}</h1>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100">
+                <img src="{{ asset('uploads/images/animals/' ~ animal.photo) }}" class="card-img-top"
+                     alt="{{ animal.race }}">
+                <div class="card-body border-0">
+                    <h2 class="text-center">{{ animal.age }} ans | {{ animal.poids }} kg | {{ animal.espece.nom }}
+                        | {{ animal.race }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card border-0 rounded-0">
+                {% if animal.isAdopted %}
+                    <div class="card-body">
+                        <h2 class="text-center p-5 w-100">Ce petit bout de chou a enfin trouvé maître à son pied ! </h2>
+                    </div>
+                {% else %}
+                    <div class="card-header border-0 bg-greenlight">
+                        <h2 class="text-center">Vous souhaitez l'adopter ?</h2>
+                    </div>
+                    {% if app.user %}
+                        <div class="card-body p-0  align-middle">
+                            {{ form_start(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                    {% else %}
+                        <a class="block p-5 my-auto text-center" href="{{ path('login') }}">Connectez-vous pour adopter ! </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
