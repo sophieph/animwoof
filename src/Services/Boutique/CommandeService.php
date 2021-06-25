@@ -46,9 +46,9 @@ class CommandeService
             $commandeDetail->setQuantite($produit['quantite']);
             $commandeDetail->setProduit($produit['produit']);
             $this->em->persist($commandeDetail);
-            $this->em->flush();
             $this->changeQuantiteProduit($produit['produit'], $produit['quantite']);
         }
+        $this->em->flush();
 
         $this->session->remove('panier');
 
