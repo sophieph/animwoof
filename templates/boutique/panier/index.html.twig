@@ -3,7 +3,20 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-    <h1>Panier</h1>
+    <div class="card border-0 rounded-0 my-3 py-3 px-4 bg-greenlight">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb p-0 m-0">
+                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Acceuil</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('boutique') }}">Boutique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Votre panier</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header text-center bg-greenlight border-0">
+            <h1>Panier</h1>
+        </div>
+    </div>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash-{{ label }}">
@@ -11,48 +24,59 @@
             </div>
         {% endfor %}
     {% endfor %}
+    <div class="card border-0 rounded-0">
     {% if items|length > 0 %}
-
-        <table>
-            <tbody>
-            {% for item in items %}
-            <tr>
-                <td><img src="{{ asset('uploads/images/products/' ~ item.produit.image)}}" class="card-img-top"  alt="{{ item.produit.name }}" style="width:50px;"/>
-                </td>
-                <td>
-                    <p>
-                       <b><u>{{ item.produit.name }}</u></b> <br>
-                        <b>Catégorie : </b> {{ item.produit.categorie.name }} <br>
-                        <b>Prix : </b> {{ item.produit.price }}&euro; <br>
-                    </p>
-                    <p class="cart-delete">
-                        <a href="{{ path('panier_remove_one', {'id' :  item.produit.id }) }}"><i
-                                    class="fas fa-minus" data-product="{{ item.produit.id }}"></i></a>
-                        <span class="cart-quantity">{{ item.quantite }}</span>
-                        <a href="{{ path('panier_add', {'id' :  item.produit.id }) }}"><i
-                                    class="fas fa-plus"></i></a>
-                    </p>
-                    <p><a href="{{ path('panier_remove', {'id' : item.produit.id}) }}" class="cart-delete">
-                            Supprimer
-                        </a></p>
-                </td>
-                <td>
-                    <p>{{ item.quantite }} x {{ item.produit.price }}&euro;</p>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot style="background-color: #fff;">
+        <div class="card-body p-0">
+            <table>
+                <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td><img src="{{ asset('uploads/images/products/' ~ item.produit.image)}}" class="card-img-top"  alt="{{ item.produit.name }}" style="width:50px;"/>
+                        </td>
+                        <td>
+                            <p>
+                                <b><u>{{ item.produit.name }}</u></b> <br>
+                                <b>Catégorie : </b> {{ item.produit.categorie.name }} <br>
+                                <b>Prix : </b> {{ item.produit.price }}&euro; <br>
+                            </p>
+                            <p class="cart-delete">
+                                <a href="{{ path('panier_remove_one', {'id' :  item.produit.id }) }}"><i
+                                            class="fas fa-minus" data-product="{{ item.produit.id }}"></i></a>
+                                <span class="cart-quantity">{{ item.quantite }}</span>
+                                <a href="{{ path('panier_add', {'id' :  item.produit.id }) }}"><i
+                                            class="fas fa-plus"></i></a>
+                            </p>
+                            <p><a href="{{ path('panier_remove', {'id' : item.produit.id}) }}" class="cart-delete">
+                                    Supprimer
+                                </a></p>
+                        </td>
+                        <td>
+                            <p>{{ item.quantite }} x {{ item.produit.price }}&euro;</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot style="background-color: #fff;">
                 <tr style="background-color: #fff; padding:10px 0; font-weight: 800; text-transform: uppercase;">
                     <td></td>
                     <td style="text-align:right;">Total :</td>
                     <td>{{ totalPrix }}&euro;</td>
                 </tr>
-            </tfoot>
-        </table>
-
-        <button><a href="{{ path('commande') }}">Passer commande</a></button>
+                </tfoot>
+            </table>
+        </div>
+        <div class="card-footer bg-white border-0 p-5">
+            <a href="{{ path('commande') }}" class="p-3 px-5 text-end bg-greenlight">Passer commande</a>
+        </div>
     {% else %}
-        <p>Vous n'avez pas de produits dans le panier</p>
+        <p class="block p-5 w-100 text-center">Vous n'avez pas de produits dans le panier</p>
     {% endif %}
+    </div>
+
+
+
+
+
+
+
 {% endblock %}

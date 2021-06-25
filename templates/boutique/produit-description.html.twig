@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{produit.name}} {% endblock %}
+{% block title %}{{ produit.name }} {% endblock %}
 
 {% block body %}
 
@@ -12,13 +12,40 @@
         {% endfor %}
     {% endfor %}
 
-<img src="{{ asset('uploads/images/products/' ~ produit.image)}}" style="width:200px" alt="{{ produit.name }}"/>
-<ul>
-    <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
-    <li><b>Prix : </b> {{ produit.price }} &euro;</li>
-    <li><b>Description : </b> {{ produit.description }}</li>
-</ul>
-    <button><a href="{{ path('panier_add', {'id' : produit.id }) }}" class="">Ajouter au panier</a></button>
 
+<div class="card border-0 rounded-0 my-3 py-3 px-4 bg-greenlight">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb p-0 m-0">
+            <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Acceuil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('boutique') }}">Boutique</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ produit.name }}</li>
+        </ol>
+    </nav>
+</div>
+    <div class="row row-cols-1 row-cols-md-2 g-0 my-3">
+        <div class="col">
+            <div class="card border-0 rounded-0 h-100">
+                <img src="{{ asset('uploads/images/products/' ~ produit.image) }}" class="img-fluid rounded-0"
+                     alt="{{ produit.name }}">
+            </div>
 
+        </div>
+        <div class="col">
+            <div class="card border-0 rounded-0 h-100">
+                <div class="card-header text-center bg-greenlight border-0">
+                    <h1>{{ produit.name }}</h1>
+                    <p><em>( {{ produit.categorie.name }} )</em></p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-center">{{ produit.description }}</p>
+                </div>
+                <div class="card-footer border-0 bg-transparent">
+                   <p class="text-end fs-2 fw-bold">{{ produit.price | number_format(2, ',') }} &euro;</p>
+                </div>
+                <div class="card-footer border-0 bg-dark text-white p-5">
+                    <a class="text-center bg-greenlight p-3" href="{{ path('panier_add', {'id' : produit.id }) }}">Ajouter au panier</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

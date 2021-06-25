@@ -3,7 +3,16 @@
 {% block title %}Faites un don | Animwoof{% endblock %}
 
 {% block body %}
-    <div class="card bg-greenlight text-center rounded-0 my-3">
+
+    <div class="card border-0 rounded-0 my-3 py-3 px-4 bg-greenlight">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb p-0 m-0">
+                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Acceuil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Faites un don</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card bg-greenlight text-center rounded-0 my-3 border-0">
         <h1>Faire une don</h1>
     </div>
 
@@ -32,11 +41,10 @@
         {% endif %}
     </div>
     {% if app.user %}
-        <div class="card bg-transparent bg-greenlight text-dark rounded-0 my-3 p-5">
+        <div class="card bg-transparent bg-greenlight text-dark rounded-0 my-3 p-5  border-0">
 
     {% if not lastDon %}
-        <p class="text-center fs-2 m-0 p-0">Il n'y a pas de don pour le moment, faites-en un petit pour commencer
-            !</p>
+        <p class="text-center fs-2 m-0 p-0">Il n'y a pas de don pour le moment, faites-en un petit pour commencer !</p>
     {% else %}
         <h2 class="text-center">Dernier don</h2>
         <div class="row text-center">
@@ -58,15 +66,15 @@
     {% endif %}
 
     {% if not app.user %}
-        <div class="card border-0 my-3 text-center p-5">
+        <div class="card border-0 my-3 text-center p-5  border-0">
             <h3><a href="{{ path('login') }}">Connectez-vous</a> ou <a href="{{ path('signup') }}">inscrivez-vous</a>
                 pour faire un don</h3>
         </div>
     {% else %}
         <div class="row">
             <div class="col my-3">
-                <div class="card rounded-0 p-0  h-100">
-                    <div class="card-header text-center">
+                <div class="card rounded-0 p-0  h-100  border-0">
+                    <div class="card-header text-center  border-0">
                         <h2 class="card-title">Mes dons ({{ userDons.total }}
                             | {{ userDons.sum | number_format(2, ',') }} €)</h2>
                     </div>
@@ -105,8 +113,8 @@
                 </div>
             </div>
             <div class="col my-3">
-                <div class="card rounded-0 h-100">
-                    <div class="card-header text-center">
+                <div class="card rounded-0 h-100  border-0">
+                    <div class="card-header text-center  border-0">
                         <h2 class="card-title">Faites un don</h2>
                     </div>
                     <div class="card-body p-0">
