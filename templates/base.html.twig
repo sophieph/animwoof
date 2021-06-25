@@ -8,73 +8,30 @@
            and uncomment the following Encore helpers to start using Symfony UX #}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-              integrity="undefined" crossorigin="anonymous">
-    {% endblock %}
+    {% block stylesheets %} {{ encore_entry_link_tags('app') }} {% endblock %}
 </head>
 <body id="app">
-    <div class="content-body">
-        <div class="wrapper">
-            <header>
-                <h1><a href="{{ path('homepage') }}">Animwoof</a></h1>
-                <nav>
-                    <ul>
-                        <li><a href="{{ path('homepage') }}">Accueil</a></li>
-                        <li><a href="{{ path('adoption') }}">Adoption</a></li>
-                        <li><a href="{{ path('boutique') }}">Boutique</a></li>
-                        <li><a href="{{ path('don') }}">Donation</a></li>
-                        <li><a href="{{ path('blog') }}">Blog</a></li>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('admin_dashboard') }}">Back-office</a></li>{% endif %}
-                        <li><a href="{{ path('panier') }}">
-                                <i class="fas fa-shopping-bag"></i>
-                                {% set sess = app.session.get('panier') %}
-                                {% set total = 0 %}
-                                {% for key,value in sess %}
-                                    {% set total = total + value %}
-                                {% endfor %}
-                                <span class="articles">
-                                ({{ total }})</span> </a></li>
-                    </ul>
-                </nav>
-                {% if app.user %}
-                    <div class="mb-3">
-                        <ul>
-                            <li><b>Hello you</b></li>
-                            <li><a href="{{ path('profil') }}">Mon compte</a> - <a style="font-size:10px;"
-                                                                                   href="{{ path('logout') }}">Se
-                                    déconnecter</a>
-                            </li>
-                        </ul>
-                    </div>
-                {% else %}
-                    <ul>
-                        <li>
-                            <a href="{{ path('login') }}">Log in</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('signup') }}">Sign up</a>
-                        </li>
+<div class="content-body">
+    <header>
+        {# back-office nav #}
+        {% include 'admin/_template/admin_navbar_template.html.twig' %}
 
-                    </ul>
+        {# new header #}
+        {% include 'homepage/_template/navbar_template.html.twig' %}
 
-                {% endif %}
-            </header>
+        {# user navbar #}
+        {% include 'homepage/_template/user_navbar_template.html.twig' %}
+    </header>
 
-            <div class="content">
-                {% block body %}{% endblock %}
-            </div>
-            <div class="footer"></div>
-        </div>
-
+    <div class="content container">
+        {% block body %}{% endblock %}
     </div>
+    <div class="footer"></div>
+
+</div>
 
 
-    <footer class="footer footer-body bg-dark px-2 py-3">
-        <a class="mx-auto text-white" href="{{ path('don') }}">Faire un don</a>
-    </footer>
+{% include 'homepage/_template/footer_template.html.twig' %}
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">

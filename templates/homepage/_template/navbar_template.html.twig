@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-greenlight py-4">
+    <div class="container">
+        <a class="navbar-brand fs-1 fw-bold" href="{{ path('homepage') }}">ANIMWOOF</a>
+        <button class="navbar-toggler text-dark" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        href="{{ path('homepage') }}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('adoption') }}">Adoption</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('boutique') }}">Boutique</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('blog') }}">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('don') }}">Donation</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('admin_dashboard') }}">Gestion du site</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link active" href="{{ path('panier') }}">
+                        <i class="fas fa-shopping-bag"></i>
+                        {% set sess = app.session.get('panier') %}
+                        {% set total = 0 %}
+                        {% for key,value in sess %}
+                            {% set total = total + value %}
+                        {% endfor %}
+                        <span class="articles"> ({{ total }})</span> </a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

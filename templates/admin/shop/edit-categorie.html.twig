@@ -3,6 +3,47 @@
 {% block title %}Back-office : Boutique/categorie{% endblock %}
 
 {% block body %}
-    {{ form_start(formEditCategorie)}}
-    {{ form_end(formEditCategorie)}}
+    <div class="card my-3 p-5 text-center rounded-0">
+        <h1>Gestion de la catégorie #{{ categorie.id }}</h1>
+    </div>
+
+    <div class="card my-3 rounded-0">
+        <div class="row g-0">
+            <div class="col-md-6 col-lg-4">
+                <img src="{{ asset('uploads/images/categorie/' ~ categorie.photo) }}" class="img-fluid rounded-0" alt="{{ categorie.name }}">
+            </div>
+            <div class="col-md-6 col-lg-8">
+                <div class="card-body">
+                    <p class="card-text">Nom : <span class="fw-bold">{{ categorie.name }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col my-3">
+            <div class="card h-100 rounded-0">
+                <div class="card-header">
+                    <h2>Modification de la catégorie</h2>
+                </div>
+                <div class="card-body p-0">
+                    {{ form_start(formEditCategorie) }}
+                    {{ form_row(formEditCategorie.name) }}
+                    {{ form_row(formEditCategorie.photo) }}
+                    {{ form_row(formEditCategorie.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
+                    {{ form_end(formEditCategorie) }}
+                </div>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card h-100 rounded-0">
+                <div class="card-header">
+                    <h2>Articles liés à la catégorie</h2>
+                </div>
+                <div class="card-body p-5">
+                    <p class="text-center">Liste d'articles lié à la catégorie</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

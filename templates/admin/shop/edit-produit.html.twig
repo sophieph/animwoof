@@ -10,19 +10,68 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <img src="{{ asset('uploads/images/products/' ~ produit.image)}}" style="width:100px" alt="{{ produit.name }}"/>
-    <ul>
-        <li><b>Nom :</b> {{ produit.name }}</li>
-        <li><b>Prix :</b> {{ produit.price }}&euro; </li>
-        <li><b>Quantité : </b>{{ produit.quantity }}</li>
-        <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
-        <li><b>Crée le</b> {{ produit.createdAt|date('d/m/Y') }}</li>
-        <li><b>Description : </b>{{ produit.description }}</li>
-    </ul>
-    <button class=""><a href="{{ path('admin_produit_delete', {'id' : produit.id }) }}"> <i class="fas fa-trash-alt"></i> Enlever de la vente</a></button>
+    <div class="card my-3 p-5 text-center rounded-0">
+        <h1>Gestion du produit #{{ produit.id }}</h1>
+    </div>
+    {# info produit #}
+    <div class="card rounded-0 my-3">
+        <div class="row g-0">
+            <div class="col-md-6 col-lg-4">
+                <img src="{{ asset('uploads/images/products/' ~ produit.image) }}" class="img-fluid rounded-0"
+                     alt="{{ produit.name }}">
+            </div>
+            <div class="col-md-6 col-lg-8">
+                <div class="card-body">
+                    <p class="card-text">Nom : <span class="fw-bold">{{ produit.name }}</span></p>
+                    <p class="card-text">Prix : <span class="fw-bold">{{ produit.price }} &euro;</span></p>
+                    <p class="card-text">Catégorie : <span class="fw-bold">{{ produit.categorie.name }}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <p class="card-text">Description :</p>
+                    <div class="border w-100 px-3 py-4">
+                        <p class="card-text">{{ produit.description }} </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <p class="card-text">Stock restant : <span class="fw-bold">{{ produit.quantity }}</span></p>
+                    <p class="card-text">En vente depuis le : <span
+                                class="fw-bold">{{ produit.createdAt|date('d/m/Y') }}</span></p>
+                </div>
+            </div>
+        </div>
+        {# <button class=""><a href="{{ path('admin_produit_delete', {'id' : produit.id }) }}"> <i class="fas fa-trash-alt"></i> Enlever de la vente</a></button> #}
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 my-3">
+        {# formualire edition formualire #}
+        <div class="col my-3">
+            <div class="card rounded-0 h-100">
+                <div class="card-header">
+                    <h2>Modifier le produit</h2>
+                </div>
+                <div class="card-body p-0">
+                    {{ form_start(form) }}
+                    {{ form_row(form.ajouter, {'label' : 'Sauvegarder les modification'}) }}
+                    {{ form_end(form) }}
+                </div>
 
-    {{ form_start(form) }}
-
-    {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
-    {{ form_end(form) }}
+            </div>
+        </div>
+        {# ventes liés au produit #}
+        <div class="col my-3">
+            <div class="card rounded-0 h-100">
+                <div class="card-header">
+                    <h2>Historique de Vente du produit #{{ produit.id }}</h2>
+                </div>
+                <div class="card-body text-center p-5">
+                    <p>liste des commandes liés au produit #{{ produit.id }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

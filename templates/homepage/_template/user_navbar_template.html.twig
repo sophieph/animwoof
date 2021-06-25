@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
+    <div class="container py-1">
+        {% if app.user %}
+        <a class="nav-link text-white d-inline-block fs-6"><b>Hello {{ app.user.pseudo }}</b></a>
+        {% endif %}
+
+        <a href=""></a>
+        <ul class="m-0" >
+            {% if app.user %}
+                <a class="nav-link text-white d-inline-block fs-6" href="{{ path('profil') }}">Mon compte</a>
+                <a class="nav-link text-white d-inline-block fs-6" href="{{ path('logout') }}">Se déconnecter</a>
+            {% else %}
+                <a class="nav-link text-white d-inline-block fs-6" href="{{ path('login') }}">Se connecter</a>
+                <a class="nav-link text-white d-inline-block fs-6" href="{{ path('signup') }}">S'inscrire</a>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
