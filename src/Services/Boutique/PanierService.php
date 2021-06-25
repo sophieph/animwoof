@@ -82,11 +82,7 @@ class PanierService
         $total = 0;
 
         foreach ($this->getFullCart() as $item) {
-            if (empty($item['produit']->getPrice())) {
-                $total += $item['produit']->getPrice() * $item['quantite'];
-            } else {
-                $total += $item['produit']->getPrice() * $item['quantite'];
-            }
+            $total += $item['produit']->getPrice() * $item['quantite'];
         }
 
         return round($total,2);
