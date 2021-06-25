@@ -175,4 +175,23 @@ class AdminBoutiqueController extends AbstractController
             'categorie' => $categorie,
         ]);
     }
+    /**
+     * @Route("categorie/delete/{id}", name="admin_categorie_delete")
+     * @param Categorie $categorie
+     * @return RedirectResponse
+     */
+    public function delete(Categorie $categorie): RedirectResponse
+    {
+        if ($animal == null) {
+            $this->addFlash('error', 'Catégorie introuvable.');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorie);
+        $em->flush();
+        $this->addFlash('success', 'Catégorie retiré.');
+
+
+        return $this->redirectToRoute('admin_shop');
+    }
 }
