@@ -7,10 +7,13 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb p-0 m-0">
                 <li class="breadcrumb-item"><a href="{{ path('admin_dashboard') }}">Admin</a></li>
-                <li class="breadcrumb-item"><a href="{{ path('admin_shop') }}">Gestion des adoptions</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('admin_animals') }}">Gestion des adoptions</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Animal #{{ animal.id }}</li>
             </ol>
         </nav>
+    </div>
+    <div class="card my-3 p-5 rounded-0">
+        <h1 class="text-title text-center">Animal #{{ animal.id }}</h1>
     </div>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -19,29 +22,62 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" style="width:100px" alt="{{ animal.race }}"/>
-    <ul>
-        <li><b>Nom :</b> {{ animal.nom }}</li>
-        <li><b>Espece :</b> {{ animal.espece.nom }}</li>
-        <li><b>Race : </b>{{ animal.race }}</li>
-        <li><b>Age :</b> {{ animal.age }} ans</li>
-        <li><b>Poids :</b> {{ animal.poids }} kg</li>
-        <li><b>Née le</b> {{ animal.dateDeNaissance|date('d/m/Y') }}</li>
-        <li><b>Description : </b>{{ animal.description }}</li>
-        {% if animal.isAdopted %}
-        <li>
-            <ul>
-                <li>Adopté le {{ animal.dateAdoption|date('d/m/Y') }}</li>
-                <li>Par {{ animal.reservation.user.pseudo }}</li>
-            </ul>
-        </li>
-        {% endif %}
-    </ul>
 
-    <button class=""><a href="{{ path('admin_animals_delete', {'id' : animal.id }) }}"> <i class="fas fa-trash-alt"></i> Enlever de l'adoption</a></button>
+    {% if animal.isAdopted %}
+        <div class="card border-0 rounded-0">
+            <div class="col-12">
+                <div class="bg-success text-white  w-100 px-3 py-4">
+                    <p class="card-text text-center">Adopté le {{ animal.dateAdoption|date('d/m/Y') }} par l'user
+                        #{{ animal.reservation.user.id }} </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
-    {{ form_start(form) }}
+    <div class="card rounded-0 my-3">
+        <div class="row g-0">
+            <div class="col-md-6 col-lg-4">
+                <img src="{{ asset('uploads/images/animals/' ~ animal.photo) }}" class="img-fluid rounded-0"
+                     alt="{{ animal.nom }}">
+            </div>
+            <div class="col-md-6 col-lg-8">
+                <div class="card-body">
+                    <p class="card-text">Nom : <span class="fw-bold">{{ animal.nom }}</span></p>
+                    <p class="card-text">Race : <span class="fw-bold">{{ animal.race }}</span></p>
+                    <p class="card-text">Espèce : <span class="fw-bold">{{ animal.espece.nom }}</span></p>
+                    <p class="card-text">Àge : <span class="fw-bold">{{ animal.age }} ans</span></p>
+                    <p class="card-text">Poids : <span class="fw-bold">{{ animal.poids }} kg</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card-body">
+                    <p class="card-text">Description :</p>
+                    <div class="border w-100 px-3 py-4">
+                        <p class="card-text text-center">{{ animal.description }} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
-    {{ form_end(form) }}
+    {% if not animal.isAdopted %}
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header bg-greenlight text-center border-0">
+            <h2>Modifier l'animal</h2>
+        </div>
+        <div class="card-body p-0">
+            {{ form_start(form) }}
+            <div class="d-flex flex-row">
+                {{ form_row(form.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
+                <button class="btn text-dark border-0 px-5 rounded-0 bg-danger ">
+                    <a class="text-white" href="{{ path('admin_animals_delete', {'id' : animal.id }) }}">
+                        <i class="fas fa-trash-alt"></i> Enlever de l'adoption</a>
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}

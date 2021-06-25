@@ -44,12 +44,12 @@
                   ]),
               ],
               'first_options' => [
-                  'label' => 'Mot de passe',
+                  'label' => 'Votre mot de passe',
                   'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1'],
                   'label_attr' => ['class' => 'form-label h4 mb-2']
               ],
               'second_options' => [
-                  'label' => 'Confirmation de mot de passe',
+                  'label' => 'Veuillez confirmez votre mot de passe',
                   'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1'],
                   'label_attr' => ['class' => 'form-label h4 mb-2']]
           ])

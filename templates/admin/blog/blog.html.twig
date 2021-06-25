@@ -11,7 +11,9 @@
             </ol>
         </nav>
     </div>
-    <h1>Blog</h1>
+    <div class="card my-3 p-5 rounded-0">
+        <h1 class="text-title text-center">Gestion du blog</h1>
+    </div>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -21,46 +23,73 @@
         {% endfor %}
     {% endfor %}
 
-
-        <!-- Articles -->
-        <h2>Liste des articles</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Crée le</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for article in articles %}
-                <tr>
-                    <td>{{ article.id }}</td>
-                    <td>{{ article.titre }}</td>
-                    <td>{{ article.createdAt|date('d/m/Y') }}</td>
-                    <td><a href="{{ path('admin_blog_edit', {'id' : article.id}) }}">Modifier</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-
-
-    <h2>Ajouter un article</h2>
-
-    {{ form_start(formArticle) }}
-
-    {{ form_end(formArticle) }}
-
-    <h2>Liste des catégories</h2>
-    <ul>
-        {% for categorie in categories %}
-            <li>{{ categorie.nom }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Ajouter une catégorie</h2>
-    {{ form_start(formCategorie) }}
-    {{ form_end(formCategorie) }}
-
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col my-3">
+            <div class="card border-0 rounded-0">
+                <div class="card-header border-0 bg-greenlight text-center">
+                    <h2>Ajouter un article</h2>
+                </div>
+                <div class="card-body p-0">
+                    {{ form_start(formArticle) }}
+                    {{ form_end(formArticle) }}
+                </div>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card border-0 rounded-0">
+                <div class="card-header border-0 bg-greenlight text-center">
+                    <h2>Liste des articles</h2>
+                </div>
+                <div class="card-body p-0">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Titre</th>
+                            <th>Crée le</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td>{{ article.id }}</td>
+                                <td>{{ article.titre }}</td>
+                                <td>{{ article.createdAt|date('d/m/Y') }}</td>
+                                <td><a href="{{ path('admin_blog_edit', {'id' : article.id}) }}"><i class="fas fa-pen"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100">
+                <div class="card-header border-0 bg-greenlight text-center">
+                    <h2>Ajouter une catégorie</h2>
+                </div>
+                <div class="card-body p-0">
+                    {{ form_start(formCategorie) }}
+                    {{ form_end(formCategorie) }}
+                </div>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100">
+                <div class="card-header border-0 bg-greenlight text-center">
+                    <h2>Liste des catégories</h2>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for categorie in categories %}
+                            <li class="list-group-item">{{ categorie.nom }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

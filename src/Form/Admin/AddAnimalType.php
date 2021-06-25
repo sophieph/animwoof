@@ -19,17 +19,46 @@ class AddAnimalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class)
-            ->add('race', TextType::class)
-            ->add('age', IntegerType::class)
-            ->add('poids', IntegerType::class)
+            ->add('nom', TextType::class, [
+                'label' => 'Nom de l\'animal',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
+            ])
+            ->add('race', TextType::class, [
+                'label' => 'Race de l\'animal',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
+            ])
+            ->add('age', IntegerType::class, [
+                'label' => 'Àge de l\'animal',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
+            ])
+            ->add('poids', IntegerType::class, [
+                'label' => 'Poids de l\'animal',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
+            ])
             ->add('dateDeNaissance', DateType::class, [
                 'widget' => 'single_text',
+                'label' => 'Date de naissance de l\'animal',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
             ])
-            ->add('description',TextareaType::class)
-            ->add('espece')
+            ->add('description',TextareaType::class, [
+                'label' => 'Description de l\'animal',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1']
+            ])
+            ->add('espece', null, [
+                    'label' => 'Espece de l\'animal',
+                    'label_attr' => ['class' => 'form-label h4 mb-2'],
+                    'attr' => ['class' => 'form-select border-0 rounded-0 border-bottom border-1']
+            ])
             ->add('photo', FileType::class, [
                 'label' => 'Image',
+                'label_attr' => ['class' => 'form-label h4 mb-2'],
+                'attr' => ['class' => 'form-control border-0 rounded-0 border-bottom border-1'],
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -45,6 +74,8 @@ class AddAnimalType extends AbstractType
                 ],
             ])
             ->add('ajouter', SubmitType::class, [
+                'label' => 'Ajouter à l\'adoption',
+                'attr' => ['class' => ' btn text-dark border-0 px-5 rounded-0 bg-greenlight']
             ])
         ;
     }

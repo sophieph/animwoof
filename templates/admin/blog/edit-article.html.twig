@@ -12,6 +12,9 @@
             </ol>
         </nav>
     </div>
+    <div class="card my-3 p-5 rounded-0">
+        <h1 class="text-title text-center">Article #{{ article.id }}</h1>
+    </div>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash-{{ label }}">
@@ -19,28 +22,51 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <ul>
-        <li><b>Titre:</b> {{ article.titre }}</li>
-        <li><b>Crée le</b> {{ article.createdAt|date('d/m/Y') }}</li>
-        <li>
-            <b>Catégorie(s)</b> :
-            <ul>
-                {% for categorie in article.categorie %}
-                    <li>
-                        {{ categorie.nom}}
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-        <li><b>Contenu :</b> {{ article.contenu}}</li>
+    <div class="card border-0 rounded-0 my-3">
+        <div class="row g-0">
+            <div class="col">
+                <div class="card-header border-0 rounded-0 bg-dark text-white p-5">
+                    <h3 class="text-end card-title fw-bold fs-1">{{ article.titre }}</h3>
+                </div>
+                <div class="card-body p-5">
+                    <p class="card-text">{{ article.contenu }}</p>
+                </div>
+                <div class="card-footer border-0 p-5">
+                    {% for categorie in article.categorie %}
+                        <small><a class="badge rounded-pill bg-greenlight p-3 mr-2 my-2"
+                                  href="{{ path('blog_categorie', {'id' : categorie.id }) }}">{{ categorie.nom }}</a></small>
+                    {% endfor %}
+                    <p class="card-text">
+                        <small class="text-muted"> <i>Posté le {{ article.createdAt|date('d/m/Y') }} par
+                                <b>{{ article.user.pseudo }}</b></i> </small>
+                    </p>
 
-    </ul>
-    <button class=""><a href="{{ path('admin_blog_delete', {'id' : article.id }) }}"> <i class="fas fa-trash-alt"></i> Supprimer l'article</a></button>
+                </div>
+            </div>
+            {# <div class="col-6 col-md-4"> #}
+            {# <img src="..." class="img-fluid rounded-start" alt="..."> #}
+            {# </div> #}
+
+        </div>
+    </div>
 
 
-    {{ form_start(form) }}
 
-    {{ form_row(form.ajouter, {'label' : 'Modifier'}) }}
-    {{ form_end(form) }}
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header bg-greenlight text-center border-0">
+            <h2>Modifier l'article</h2>
+        </div>
+        <div class="card-body p-0">
+            {{ form_start(form) }}
+            <div class="d-flex flex-row">
+                {{ form_row(form.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
+                <button class="btn text-dark border-0 px-5 rounded-0 bg-danger ">
+                    <a class="text-white" href="{{ path('admin_blog_delete', {'id' : article.id }) }}">
+                        <i class="fas fa-trash-alt"></i> Supprimer l'article</a>
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 
 {% endblock %}

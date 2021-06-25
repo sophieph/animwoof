@@ -11,7 +11,10 @@
             </ol>
         </nav>
     </div>
-<h1>Animaux</h1>
+
+    <div class="card my-3 p-5 rounded-0">
+        <h1 class="text-title text-center">Gestion des adoption</h1>
+    </div>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -21,74 +24,106 @@
         {% endfor %}
     {% endfor %}
 
+
     {% if animals is not null %}
-    <!-- Animaux adoptés -->
-    <h2>Liste des animaux adoptés</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Espèce</th>
-            <th>Age</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for adopted in animalsAdopted %}
-        <tr>
-            <td>{{ adopted.id }}</td>
-            <td>{{ adopted.nom }}</td>
-            <td>{{ adopted.espece }}</td>
-            <td>{{ adopted.age }}</td>
-            <td><a href="{{ path('admin_animals_edit', {'id' : adopted.id }) }}">Modifier</a></td>
-        </tr>
-        {% endfor %}
-        {{ knp_pagination_render(animalsAdopted) }}
-        </tbody>
-    </table>
-    <!-- Animaux non adoptés -->
-    <h2>Liste des animaux non adoptés</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Espèce</th>
-            <th>Age</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for notAdopted in animalsNotAdopted %}
-            <tr>
-                <td>{{ notAdopted.id }}</td>
-                <td>{{ notAdopted.nom }}</td>
-                <td>{{ notAdopted.espece }}</td>
-                <td>{{ notAdopted.age }}</td>
-                <td><a href="{{ path('admin_animals_edit', {'id' : notAdopted.id }) }}">Modifier</a></td>
-            </tr>
-        {% endfor %}
-        {{ knp_pagination_render(animalsNotAdopted) }}
-        </tbody>
-    </table>
-    {% endif %}
-
-
-    <h2>Ajouter un animal</h2>
-
-    {{ form_start(formAnimal) }}
-
-    {{ form_end(formAnimal) }}
-
-    <h2>Ajouter une espèce</h2>
-    {{ form_start(formEspece) }}
-    <div>
-        <div>
-            {{ form_row(formEspece.nom) }}
+    <div class="row row-cols-1 row-cols-md-2">
+        <!-- Animaux adoptés -->
+        <div class="col  my-3">
+            <div class="card border rounded-0">
+                <div class="card-header bg-greenlight border-0">
+                    <h2 class="text-center">Liste des animaux adoptés</h2>
+                </div>
+                <div class="card-body p-0">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Espèce</th>
+                            <th>Age</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for adopted in animalsAdopted %}
+                            <tr>
+                                <td>{{ adopted.id }}</td>
+                                <td>{{ adopted.nom }}</td>
+                                <td>{{ adopted.espece }}</td>
+                                <td>{{ adopted.age }}</td>
+                                <td><a href="{{ path('admin_animals_edit', {'id' : adopted.id }) }}"><i class="fas fa-eye"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        {{ knp_pagination_render(animalsAdopted) }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Animaux non adoptés -->
+        <div class="col  my-3">
+            <div class="card border rounded-0">
+                <div class="card-header bg-greenlight border-0">
+                    <h2 class="text-center">Liste des animaux non adoptés</h2>
+                </div>
+                <div class="card-body p-0">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Espèce</th>
+                            <th>Age</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for notAdopted in animalsNotAdopted %}
+                            <tr>
+                                <td>{{ notAdopted.id }}</td>
+                                <td>{{ notAdopted.nom }}</td>
+                                <td>{{ notAdopted.espece }}</td>
+                                <td>{{ notAdopted.age }}</td>
+                                <td><a href="{{ path('admin_animals_edit', {'id' : notAdopted.id }) }}"><i class="fas fa-pen"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        {{ knp_pagination_render(animalsNotAdopted) }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+    {% endif %}
 
-    {{ form_end(formEspece) }}
+    <div class="row row-cols-1 row-cols-2">
+        <div class="col my-3">
+            <div class="card rounded-0 border-0 h-100">
+                <div class="card-header text-center">
+                    <h2>Ajouter un animal</h2>
+                </div>
+                <div class="card-body p-0">
+                    {{ form_start(formAnimal) }}
+                    {{ form_end(formAnimal) }}
+                </div>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card rounded-0 border-0 h-100">
+                <div class="card-header text-center">
+                    <h2>Ajouter une espèce</h2>
+                </div>
+                <div class="card-body p-0">
+                    {{ form_start(formEspece) }}
+                    <div>
+                        <div>
+                            {{ form_row(formEspece.nom) }}
+                        </div>
+                    </div>
 
+                    {{ form_end(formEspece) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
