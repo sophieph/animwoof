@@ -41,6 +41,7 @@
                     {{ form_row(formEditCategorie.ajouter, {'label' : 'Sauvergarder les modifications'}) }}
                     {{ form_end(formEditCategorie) }}
                 </div>
+                <button class="btn-danger"><a href="{{ path('admin_categorie_delete', {'id' : categorie.id }) }}"> <i class="fas fa-trash-alt fa-sm"></i> Supprimer la catégorie ?</a></button>
             </div>
         </div>
         <div class="col my-3">
