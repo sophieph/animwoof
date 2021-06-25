@@ -3,12 +3,11 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-
-    <div class="card rounded-0 my-3">
-        <div class="card-header bg-greenlight">
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header bg-greenlight border-0">
             <h2 class="text-center">Adoptez des animaux</h2>
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                 {% for animal in animals %}
                     <div class="col my-3">
@@ -19,6 +18,9 @@
                                 <h4 class="card-title text-center fs-3">{{ animal.nom }}</h4>
                                 <p class="card-text text-center">{{ animal.age }} ans | {{ animal.espece.nom }}
                                     | {{ animal.race }}</p>
+                                <p class="card-text text-center">{% if animal.isAdopted %} Il a trouvé une famille ! le  {{ animal.dateAdoption|date('d/m/Y') }}
+                                    {% else %} Il n'a pas encore de famille
+                                    {% endif %}</p>
                             </div>
                             <div class="card-footer text-center p-0 ">
                                 <a href="{{ path('adoption_animal_description', { 'id' : animal.id}) }}"
@@ -32,13 +34,11 @@
             </div>
         </div>
     </div>
-
-
-    <div class="card rounded-0 my-3">
-        <div class="card-header bg-greenlight">
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header bg-greenlight border-0">
             <h2 class="text-center">Procurez-vous ces articles</h2>
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
                 {% for produit in produits %}
                     <div class="col my-3">
@@ -62,7 +62,6 @@
                                         </a>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -70,22 +69,20 @@
             </div>
         </div>
     </div>
-
     <div class="row row-cols-1 row-cols-md-2">
         <div class="col my-3">
-            <div class="card rounded-0 h-100">
-                <div class="card-header bg-greenlight">
+            <div class="card rounded-0 h-100 border-0">
+                <div class="card-header bg-greenlight border-0">
                     <h2 class="text-center">Dernier news</h2>
                 </div>
             </div>
         </div>
         <div class="col my-3">
-            <div class="card  rounded-0 h-100">
-                <div class="card-header bg-greenlight">
+            <div class="card border-0 rounded-0 h-100">
+                <div class="card-header bg-greenlight border-0">
                     <h2 class="text-center">Faites un don</h2>
                 </div>
                 <div class="card-body p-0 bg-transparent">
-
                     {% if not app.user %}
                         <h3 class="d-block w-100 py-5 text-center"><a href="{{ path('login') }}">Connectez-vous</a> ou
                             <a href="{{ path('signup') }}">inscrivez vous</a>
@@ -95,13 +92,7 @@
                         {{ form_end(donateForm) }}
                     {% endif %}
                 </div>
-
             </div>
         </div>
-
     </div>
-
-
-
-
 {% endblock %}

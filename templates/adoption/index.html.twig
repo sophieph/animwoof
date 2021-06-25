@@ -3,61 +3,77 @@
 {% block title %}Adoptez un animal ! {% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Anim Family </h1>
-    <div class="row">
-    {% for animal in animals %}
-        <div class="col-sm-3">
-            <div class="card" style="width: 18rem; opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
-                <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" class="card-img-top"  alt="{{ animal.race }}"/>
-                <div class="card-body">
-                    <h5 class="card-title">{{ animal.nom }}</h5>
 
-                    <ul>
-                        <li><b>Espèce :</b> {{ animal.espece.nom }}</li>
-                        <li><b>Race : </b> {{ animal.race }}</li>
-                        <li><b>Age : </b> {{ animal.age }} ans</li>
-                        <li>{% if animal.isAdopted %} Il a trouvé une famille ! - Adopté le  {{ animal.dateAdoption|date('d/m/Y') }}
-                            {% else %} Il n'a pas encore de maître
-                            {% endif %}</li>
-                    </ul>
-                    <p class="card-text">
-
-                    {{ animal.description }}
-                    </p>
-                    <button><a href="{{ path('adoption_animal_description', { 'id' : animal.id}) }}" class="">En savoir davantage</a></button>
-                </div>
+    <div class="card rounded-0 my-3 border-0">
+        <div class="card-header bg-greenlight border-0">
+            <h1 class="text-center">Adoptez des animaux</h1>
+        </div>
+        <div class="card-body p-0">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
+                {% for animal in animals %}
+                    <div class="col my-3">
+                        <div class="card h-100" style="opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
+                            <img src="{{ asset('uploads/images/animals/' ~ animal.photo) }}" class="card-img-top"
+                                 alt="{{ animal.nom }}">
+                            <div class="card-body">
+                                <h4 class="card-title text-center fs-3">{{ animal.nom }}</h4>
+                                <p class="card-text text-center">{{ animal.age }} ans | {{ animal.espece.nom }}
+                                    | {{ animal.race }}</p>
+                            </div>
+                            <div class="card-footer text-center p-0 ">
+                                <a href="{{ path('adoption_animal_description', { 'id' : animal.id}) }}"
+                                   class="text-white fs-5 bg-dark rounded-0 border-0 text-center d-block p-4 w-100">
+                                    En savoir davantage
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
-        {{ knp_pagination_render(animals) }}
-
     </div>
 
-
-    <h1>Les derniers animaux adoptés</h1>
-    <div class="row">
-    {% for animal in animalAdopted %}
-        <div class="col-sm-3">
-            <div class="card" style="width: 18rem;opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
-                <img src="{{ asset('uploads/images/animals/' ~ animal.photo)}}" class="card-img-top"  alt="{{ animal.race }}"/>
-                <div class="card-body">
-                    <h5 class="card-title">{{ animal.nom }}</h5>
-                    <ul>
-                        <li><b>Espèce :</b> {{ animal.espece.nom }}</li>
-                        <li><b>Race : </b> {{ animal.race }}</li>
-                        <li><b>Age : </b> {{ animal.age }}</li>
-                        <li>{% if animal.isAdopted %} Il a trouvé une famille !- Adopté le  {{ animal.dateAdoption|date('d/m/Y') }}{% endif %}</li>
-                    </ul>
-                    <p class="card-text">
-
-                        {{ animal.description }}
-                    </p>
-                    <button><a href="{{ path('adoption_animal_description', { 'id' : animal.id}) }}" class="">En savoir davantage</a></button>
-                </div>
+    <div class="card rounded-0 my-3 border-0">
+        <div class="card-header bg-greenlight border-0">
+            <h2 class="text-center">Les derniers animaux adoptés</h2>
+        </div>
+        <div class="card-body p-0">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
+                {% for animal in animalAdopted %}
+                    <div class="col my-3">
+                        <div class="card h-100" style="opacity:{% if animal.isAdopted %}0.5 {% else %}1 {% endif %}">
+                            <img src="{{ asset('uploads/images/animals/' ~ animal.photo) }}" class="card-img-top"
+                                 alt="{{ animal.nom }}">
+                            <div class="card-body">
+                                <h4 class="card-title text-center fs-3">{{ animal.nom }}</h4>
+                                <p class="card-text text-center">{{ animal.age }} ans | {{ animal.espece.nom }}
+                                    | {{ animal.race }}</p>
+                                <p class="card-text text-center">Il a trouvé une famille le  {{ animal.dateAdoption|date('d/m/Y') }}
+                                    <!doctype html>
+                                    <html lang="en">
+                                    <head>
+                                        <meta charset="UTF-8">
+                                        <meta name="viewport"
+                                              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                                        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                                        <title>Document</title>
+                                    </head>
+                                    <body>
+                                    
+                                    </body>
+                                    </html></p>
+                            </div>
+                            <div class="card-footer text-center p-0 ">
+                                <a href="{{ path('adoption_animal_description', { 'id' : animal.id}) }}"
+                                   class="text-white fs-5 bg-dark rounded-0 border-0 text-center d-block p-4 w-100">
+                                    En savoir davantage
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
     </div>
-</div>
+
 {% endblock %}

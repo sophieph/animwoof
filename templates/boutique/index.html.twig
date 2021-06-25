@@ -2,42 +2,44 @@
 {% block title "Boutique animwoof" %}
 
 {% block body %}
-    <div class="container">
-        <h1>Boutique</h1>
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="flash-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-        <div class="row">
-            {% for produit in produits %}
-                <div class="col-sm-3">
-                    <div class="card" style="width: 18rem; opacity:{% if produit.quantity == 0 %}0.5 {% else %}1 {% endif %}">
-                        <a href="{{ path('boutique_produit_description', {'id' : produit.id}) }}">
-                            <img src="{{ asset('uploads/images/products/' ~ produit.image)}}" class="card-img-top"  alt="{{ produit.name }}"/>
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ produit.name }}</h5>
 
-                            <ul>
-                                <li><b>Catégorie :</b> {{ produit.categorie.name }}</li>
-                                <li><b>Prix : </b> {{ produit.price }}&euro;</li>
-
-                            </ul>
-                            <p class="card-text">
-                                {{ produit.description }}
-                            </p>
-                            <button><a href="{{ path('panier_add', {'id' : produit.id }) }}" class="">Ajouter au panier</a></button>
-                        </div>
-                        <a href="{{ path('boutique_produit_description', {'id' : produit.id}) }}">
-                            En voir plus
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="card rounded-0 my-3 border-0">
+        <div class="card-header bg-greenlight border-0">
+            <h1 class="text-center">Boutique</h1>
         </div>
+        <div class="card-body p-0">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
+                {% for produit in produits %}
+                    <div class="col my-3">
+                        <div class="card h-100">
+                            <img src="{{ asset('uploads/images/products/' ~ produit.image) }}" class="card-img-top"
+                                 alt="{{ produit.name }}">
+                            <div class="card-body">
+                                <h4 class="card-title text-center fs-3">{{ produit.name }}</h4>
+                                <p class="card-text text-center">{{ produit.price }}&euro;
+                                    | {{ produit.categorie.name }}</p>
+                            </div>
+                            <div class="card-footer text-center p-0 border-0">
+                                <div class="row g-0">
+                                    <div class="col">
+                                        <a href="{{ path('boutique_produit_description', { 'id' : produit.id}) }}"
+                                           class="text-white fs-5 bg-dark rounded-0 text-center d-block p-4 w-100">
+                                            En voir plus
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="{{ path('panier_add', { 'id' : produit.id}) }}"
+                                           class="fs-5 bg-greenlight border-0 rounded-0 text-center d-block p-4 w-100">
+                                            Ajouter au panier
+                                        </a>
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}

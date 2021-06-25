@@ -3,34 +3,44 @@
 {% block title %}{{ categorie.nom }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>Catégorie : {{ categorie.nom }}</h1>
-            </div>
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-header bg-greenlight border-0">
+            <h1 class="text-center">Catégorie : {{ categorie.nom }}</h1>
         </div>
+        <div class="card-body p-0">
+            {% if not articles %}
+                <p>Il n'y a pas d'articles pour le moment</p>
+            {% else %}
+                {% for i, article in articles %}
+                    <div class="card rounded-0 my-3">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="card-header border-0 rounded-0 bg-dark text-white p-5">
+                                    <h3 class="text-end card-title fw-bold fs-1">{{ article.titre }}</h3>
+                                </div>
+                                <div class="card-body p-5">
+                                    <p class="card-text">{{ article.contenu }}</p>
+                                </div>
+                                <div class="card-footer border-0 p-5">
+                                    {% for categorie in article.categorie %}
+                                        <small><a class="badge rounded-pill bg-greenlight p-3 mr-2 my-2" href="{{ path('blog_categorie', {'id' : categorie.id }) }}">{{ categorie.nom }}</a></small>
+                                    {% endfor %}
+                                    <p class="card-text">
+                                        <small class="text-muted"> <i>Posté le {{ article.createdAt|date('d/m/Y') }} par <b>{{ article.user.pseudo }}</b></i> </small>
+                                    </p>
 
-        {% if articles is not null %}
-            {% for article in articles %}
-                <div class="row" style="padding: 50px; border-bottom: 1px solid #333;">
-                    <div class="col-sm-12">
-                        <h2>{{ article.titre }}</h2>
-                        <p><i>Posté le {{ article.createdAt|date('d/m/Y') }} par <b>{{ article.user.pseudo }}</b></i></p>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                {{ article.contenu }}
+                                </div>
                             </div>
+                            {# <div class="col-6 col-md-4"> #}
+                            {# <img src="..." class="img-fluid rounded-start" alt="..."> #}
+                            {# </div> #}
+
                         </div>
-
-                        <p style="font-size: 10px;margin:50px 0 0 0;"><b>Catégorie(s)</b> : {% for categorie in article.categorie %}<a
-                                    href="{{ path('blog_categorie', {'id' : categorie.id }) }}">{{ categorie.nom }}</a> {% endfor %}</p>
                     </div>
-                </div>
-            {% endfor %}
-
-        {% else  %}
-            <p>Il n'y a pas d'articles pour le moment</p>
-        {% endif %}
+                    {% if ((i+1) != (articles | length)) %}
+                        <div class="divider col-12 col-md-6 mx-auto py-1 my-4 bg-greenlight"></div> {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

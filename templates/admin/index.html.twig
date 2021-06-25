@@ -1,8 +1,36 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Back-office{% endblock %}
 
 {% block body %}
+    <div class="card rounded-0 my-3 border-0">
+        <div class="card-header bg-greenlight border-0">
+            <h1 class="text-center">Tableau de bord</h1>
+        </div>
+    </div>
+    <div class="row row-cols-2  ">
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100 p-0 align-middle bg-greenlight">
+                <a class="block p-5 my-auto text-center" href="{{ path('admin_animals') }}">Gestion des adoptions</a>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100 p-0 align-middle bg-greenlight">
+                <a class="block p-5 my-auto text-center" href="{{ path('admin_shop') }}">Gestion de la boutique</a>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100 p-0 align-middle bg-greenlight">
+                <a class="block p-5 my-auto text-center" href="{{ path('admin_blog') }}">Gestion du blog</a>
+            </div>
+        </div>
+        <div class="col my-3">
+            <div class="card border-0 rounded-0 h-100 p-0 align-middle bg-greenlight">
+                <a class="block p-5 my-auto text-center" href="{{ path('admin_donation') }}">Historique des
+                    donnations</a>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}
