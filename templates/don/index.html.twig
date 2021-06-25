@@ -43,10 +43,16 @@
             <div class="col">Date de transaction : <b>{{ lastDon.dateTransaction | date('d/m/y') }}</b></div>
             <div class="col">Montant: <b>{{ lastDon.montant| number_format(2, ',') }} €</b></div>
         </div>
-        <div class="border border-2 border-white my-3 p-3">
-            <p>{{ lastDon.message | raw }}</p>
-        </div>
-        <p class="text-end"><em>{% if lastDon.isAnonymous %}Donateur anonyme {% else %} {{ lastDon.user.pseudo }} {% endif %}</em></p>
+
+            <div class="border border-2 border-white my-3 p-3 text-center">
+                {% if not lastDon.message %}
+                    <p class="m-3">Le donnateur n'a pas laissé de message</p>
+                {% else %}
+                    <p class="m-3 fw-bold">« {{ lastDon.message }} »</p>
+                {% endif %}
+            </div>
+
+        <p class="text-end">Merci <em class="fw-bold">{% if lastDon.isAnonymous %}Donateur anonyme {% else %} {{ lastDon.user.pseudo }} {% endif %}</em></p>
     {% endif %}
         </div>
     {% endif %}
@@ -58,8 +64,8 @@
         </div>
     {% else %}
         <div class="row">
-            <div class="col">
-                <div class="card rounded-0 p-0">
+            <div class="col my-3">
+                <div class="card rounded-0 p-0  h-100">
                     <div class="card-header text-center">
                         <h2 class="card-title">Mes dons ({{ userDons.total }}
                             | {{ userDons.sum | number_format(2, ',') }} €)</h2>
@@ -86,7 +92,7 @@
                                         <td>Don #{{ don.id }}</td>
                                         <td>{{ don.montant | number_format(2, ',') }}€</td>
                                         <td>{{ don.dateTransaction | date('d/m/y') }}</td>
-                                        <td>{% if don.isAnonymous %} Oui {% else %}Non {% endif %}</td>
+                                        <td>{% if don.isAnonymous %} <i class="fa fa-check"></i> {% else %}<i class="fa fa-times" ></i> {% endif %}</td>
                                         <td><a href="{{ path('single_don', {'id' : don.id}) }}"><i
                                                         class="fas fa-eye"></i></a></td>
                                     </tr>
@@ -98,12 +104,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card rounded-0">
+            <div class="col my-3">
+                <div class="card rounded-0 h-100">
                     <div class="card-header text-center">
                         <h2 class="card-title">Faites un don</h2>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         {{ form_start(donnateForm) }}
                         {{ form_end(donnateForm) }}
                     </div>

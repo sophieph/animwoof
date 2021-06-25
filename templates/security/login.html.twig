@@ -3,24 +3,40 @@
 {% block title %}Connectez-vous{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword"  autocomplete="current-password" required>
+    <div class="card border-0 rounder-0 my-3">
+        <div class="card-header bg-greenlight border-0 rounded-0">
+            <h1 class="text-center">Connectez-vous !</h1>
+            <small><a href="{{ path('signup') }}" class="text-center d-block mx-auto w-100">Vous n'avez pas de compte ? Cliquez ici pour vous inscrire.</a></small>
+        </div>
+    </div>
+    <div class="card border-0 rounded-0 my-3">
+        <div class="card-body p-0">
+            <form method="post" class="bg-transparent">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
 
+                <div class="my-3">
+                    <label class="form-label" for="inputEmail">Adresse E-mail</label>
+                    <input class="form-control border-0 border-bottom rounded-0" type="email"
+                           value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required
+                           autofocus>
+                </div>
+                <div class="my-3">
+                    <label class="form-label" for="inputPassword">Mot de passe</label>
+                    <input class="form-control border-0 border-bottom rounded-0" type="password" name="password"
+                           id="inputPassword" autocomplete="current-password" required>
+                </div>
+                <div class="my-3">
+                    <button class="btn bg-greenlight border-0 rounded-0 m-0" type="submit">
+                        Se connecter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <button type="submit">
-        Se connecter
-    </button>
-</form>
 {% endblock %}

@@ -9,7 +9,12 @@
         <div class="h4"><i>Montant</i> : <b>{{ don.montant | number_format(2, ',')}} €</b></div>
         <hr>
         <div class="h4"><i>Message</i>:</div>
-        <div class="h4 card rounded-0 py-3 px-2 text-center"><b><em>« {{ don.message }} »</em></b></div>
+        <div class="h4 card rounded-0 py-3 px-2 text-center">
+            {% if not don.message %}
+                <p class="m-3">Le donnateur n'a pas laissé de message</p>
+            {% else %}
+                <p class="m-3 fw-bold">« {{ don.message }} »</p>
+            {% endif %}</div>
         <hr>
         <p class="h4"><i>Donateur</i> : <b>{% if(don.isAnonymous) %} Anonyme {% else %} {{ don.user.pseudo }} {% endif %}</b></p>
     </div>

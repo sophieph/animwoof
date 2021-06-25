@@ -27,7 +27,7 @@
                     <li><a href="{{ path('don') }}">N'hésitez pas à faire des dons afin d'aider au développement de notre association.</a></li>
                 {% else %}
                     {% for don in dons.list %}
-                        <li><a href="{{ path('single_don', {'id' : don.id}) }}">Don #{{ don.id }}</a> <i>donné le {{ don.dateTransaction | date('d/m/y') }}</i> - {{ don.montant| number_format(2, ',') }} €{% if don.isAnonymous %} - Don anonyme {% endif%} </li>
+                        <li><a href="{{ path('single_don', {'id' : don.id}) }}">Don #{{ don.id }}</a> du <i>{{ don.dateTransaction | date('d/m/y') }}</i> - {{ don.montant| number_format(2, ',') }} €{% if don.isAnonymous %} - <i class="fa fa-eye-slash" ></i> {% endif%} </li>
                     {% endfor %}
                 {% endif %}
             </ul>
