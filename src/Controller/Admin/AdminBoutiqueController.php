@@ -104,8 +104,7 @@ class AdminBoutiqueController extends AbstractController
      * @param ImageService $imageService
      * @return RedirectResponse|Response
      */
-    public function editproduit(Request $request, Products $produit, ImageService $imageService): RedirectResponse|Response
-    {
+    public function editproduit(Request $request, Products $produit, ImageService $imageService) {
 
         if ($produit == null) {
             $this->addFlash('danger', 'Produit introuvable');
