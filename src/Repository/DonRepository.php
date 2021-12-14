@@ -23,8 +23,7 @@
     }
     
     
-    public function fetchLastDon(): Don|null
-    {
+    public function fetchLastDon()  {
       return $this->findOneBy([], ['date_transaction' => 'DESC']);
     }
     
@@ -33,8 +32,7 @@
       return $this->find($idDon);
     }
     
-    public function fetchDonList(): \stdClass|null
-    {
+    public function fetchDonList() {
       //todo: pagination
       $listDons = $this->createQueryBuilder('d')
           ->orderBy('d.date_transaction', 'DESC')
